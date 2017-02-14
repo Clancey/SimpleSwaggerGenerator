@@ -31,6 +31,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>..\packages\YamlDotNet.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,9 +110,6 @@
     <Compile Include="AutoRest\core\Logging\Logger.cs" />
     <Compile Include="AutoRest\core\Logging\LogMessage.cs" />
     <Compile Include="AutoRest\core\Logging\LogMessageSeverity.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="AutoRest\core\Logging\ObjectPath.cs" />
     <Compile Include="AutoRest\core\Logging\ObjectPathPart.cs" />
     <Compile Include="AutoRest\core\Logging\ObjectPathPartIndex.cs" />
@@ -117,6 +117,107 @@
     <Compile Include="AutoRest\core\Logging\ILogListener.cs" />
     <Compile Include="AutoRest\core\CodeNamer.cs" />
     <Compile Include="AutoRest\core\Model\CodeModel.gen.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\PathItemRefConverter.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\PathLevelParameterConverter.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\ResponseRefConverter.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\SchemaRequiredItemConverter.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\SecurityDefinitionConverter.cs" />
+    <Compile Include="AutoRest\modeler\JsonConverters\SwaggerJsonConverter.cs" />
+    <Compile Include="AutoRest\modeler\Model\ApiKeyLocation.cs" />
+    <Compile Include="AutoRest\modeler\Model\CodeGenerationSettings.cs" />
+    <Compile Include="AutoRest\modeler\Model\Contact.cs" />
+    <Compile Include="AutoRest\modeler\Model\DataType.cs" />
+    <Compile Include="AutoRest\modeler\Model\ExternalDoc.cs" />
+    <Compile Include="AutoRest\modeler\Model\Header.cs" />
+    <Compile Include="AutoRest\modeler\Model\Info.cs" />
+    <Compile Include="AutoRest\modeler\Model\License.cs" />
+    <Compile Include="AutoRest\modeler\Model\OAuthFlow.cs" />
+    <Compile Include="AutoRest\modeler\Model\Operation.cs" />
+    <Compile Include="AutoRest\modeler\Model\ParameterLocation.cs" />
+    <Compile Include="AutoRest\modeler\Model\Response.cs" />
+    <Compile Include="AutoRest\modeler\Model\Schema.cs" />
+    <Compile Include="AutoRest\modeler\Model\SecurityDefinition.cs" />
+    <Compile Include="AutoRest\modeler\Model\SecuritySchemeType.cs" />
+    <Compile Include="AutoRest\modeler\Model\ServiceDefinition.cs" />
+    <Compile Include="AutoRest\modeler\Model\SpecObject.cs" />
+    <Compile Include="AutoRest\modeler\Model\SwaggerBase.cs" />
+    <Compile Include="AutoRest\modeler\Model\SwaggerObject.cs" />
+    <Compile Include="AutoRest\modeler\Model\SwaggerParameter.cs" />
+    <Compile Include="AutoRest\modeler\Model\Tag.cs" />
+    <Compile Include="AutoRest\modeler\Model\TransferProtocolScheme.cs" />
+    <Compile Include="AutoRest\modeler\Validation\AnonymousParameterTypes.cs" />
+    <Compile Include="AutoRest\modeler\Validation\APIVersionPattern.cs" />
+    <Compile Include="AutoRest\modeler\Validation\AvoidAnonymousTypes.cs" />
+    <Compile Include="AutoRest\modeler\Validation\AvoidMsdnReferences.cs" />
+    <Compile Include="AutoRest\modeler\Validation\AvoidNestedProperties.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ComparisonMessages.cs" />
+    <Compile Include="AutoRest\modeler\Validation\DefaultInEnum.cs" />
+    <Compile Include="AutoRest\modeler\Validation\DeleteMustHaveEmptyBody.cs" />
+    <Compile Include="AutoRest\modeler\Validation\DescriptiveDescriptionRequired.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ExtensionRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\GuidValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\HttpVerbValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\InvalidConstraint.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ModelTypeIncomplete.cs" />
+    <Compile Include="AutoRest\modeler\Validation\NonAppJsonTypeWarning.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationDescriptionRequired.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationIdNounInVerb.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationIdSingleUnderscore.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationNameValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationParametersValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\OperationsAPIImplementationValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ParameterDescriptionRequired.cs" />
+    <Compile Include="AutoRest\modeler\Validation\PutGetPatchResponseValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\RefNoSiblings.cs" />
+    <Compile Include="AutoRest\modeler\Validation\RequiredPropertiesMustExist.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ResourceModelValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ResponseRequired.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ServiceDefinitionParameters.cs" />
+    <Compile Include="AutoRest\modeler\Validation\SkuModelValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\SupportedSchemesWarning.cs" />
+    <Compile Include="AutoRest\modeler\Validation\SwaggerModelValidationExtensions.cs" />
+    <Compile Include="AutoRest\modeler\Validation\TrackedResourceValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\UniqueResourcePaths.cs" />
+    <Compile Include="AutoRest\modeler\Validation\ValidFormats.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\LongRunningExtensionRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\LongRunningResponseValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\MutabilityExtensionRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\MutabilityValidValuesRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\MutabilityWithReadOnlyRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\NextLinkPropertyMustExist.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\NonEmptyClientName.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\PageableExtensionRule.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\PageableRequires200Response.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\ResourceIsMsResourceValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\XmsClientNameParameterValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\XmsClientNameValidation.cs" />
+    <Compile Include="AutoRest\modeler\Validation\Extensions\XmsPathsInPath.cs" />
+    <Compile Include="AutoRest\modeler\ObjectBuilder.cs" />
+    <Compile Include="AutoRest\modeler\SwaggerModeler.cs" />
+    <Compile Include="AutoRest\modeler\SwaggerParser.cs" />
+    <Compile Include="AutoRest\core\Modeler.cs" />
+    <Compile Include="AutoRest\core\Settings.cs" />
+    <Compile Include="AutoRest\modeler\SchemaResolver.cs" />
+    <Compile Include="AutoRest\modeler\SchemaBuilder.cs" />
+    <Compile Include="AutoRest\modeler\ParameterBuilder.cs" />
+    <Compile Include="AutoRest\modeler\Extensions.cs" />
+    <Compile Include="AutoRest\modeler\BuilderExtensions.cs" />
+    <Compile Include="AutoRest\core\SettingsAliasAttribute.cs" />
+    <Compile Include="AutoRest\core\SettingsInfoAttribute.cs" />
+    <Compile Include="AutoRest\core\Logging\ErrorManager.cs" />
+    <Compile Include="AutoRest\core\Logging\CodeGenerationException.cs" />
+    <Compile Include="AutoRest\modeler\OperationBuilder.cs" />
+    <Compile Include="AutoRest\core\Parsing\LiterateYamlParser.cs" />
+    <Compile Include="AutoRest\core\Parsing\YamlBoolDeserializer.cs" />
+    <Compile Include="AutoRest\core\Parsing\YamlExtensions.cs" />
+    <Compile Include="AutoRest\core\AutoRestController.cs" />
+    <Compile Include="AutoRest\modeler\CollectionFormatBuilder.cs" />
+    <Compile Include="AutoRest\core\Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\modeler\Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoRest\" />
@@ -128,13 +229,25 @@
     <Folder Include="AutoRest\core\Validation\" />
     <Folder Include="AutoRest\core\Logging\" />
     <Folder Include="AutoRest\core\Templates\" />
+    <Folder Include="AutoRest\modeler\" />
+    <Folder Include="AutoRest\modeler\JsonConverters\" />
+    <Folder Include="AutoRest\modeler\Model\" />
+    <Folder Include="AutoRest\modeler\Validation\" />
+    <Folder Include="AutoRest\modeler\Validation\Extensions\" />
+    <Folder Include="AutoRest\core\Parsing\" />
+    <Folder Include="AutoRest\modeler\Properties\" />
+    <Folder Include="AutoRest\core\Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="AutoRest\core\Templates\PartialClassProps.ttinclude" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
+    <EmbeddedResource Include="AutoRest\core\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoRest\modeler\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

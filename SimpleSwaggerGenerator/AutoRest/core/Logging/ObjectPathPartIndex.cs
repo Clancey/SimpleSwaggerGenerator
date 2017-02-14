@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//using YamlDotNet.RepresentationModel;
+using YamlDotNet.RepresentationModel;
 
 namespace AutoRest.Core.Logging
 {
@@ -21,13 +21,13 @@ namespace AutoRest.Core.Logging
 
         public override string ReadablePath => XPath;
 
-        //public override YamlNode SelectNode(ref YamlNode node)
-        //{
-        //    var snode = node as YamlSequenceNode;
-        //    node = snode != null && 0 <= Index && Index < snode.Children.Count
-        //        ? snode.Children[Index]
-        //        : null;
-        //    return node;
-        //}
+        public override YamlNode SelectNode(ref YamlNode node)
+        {
+            var snode = node as YamlSequenceNode;
+            node = snode != null && 0 <= Index && Index < snode.Children.Count
+                ? snode.Children[Index]
+                : null;
+            return node;
+        }
     }
 }

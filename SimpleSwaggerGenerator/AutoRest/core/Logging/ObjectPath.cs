@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//using YamlDotNet.RepresentationModel;
+using YamlDotNet.RepresentationModel;
 
 namespace AutoRest.Core.Logging
 {
@@ -32,14 +32,14 @@ namespace AutoRest.Core.Logging
 
         public string ReadablePath => "#" + string.Concat(Path.Select(p => p.ReadablePath));
 
-        //public YamlNode SelectNode(YamlNode node)
-        //{
-        //    YamlNode result = node;
-        //    foreach (var part in Path)
-        //    {
-        //        result = part.SelectNode(ref node) ?? result;
-        //    }
-        //    return result;
-        //}
+        public YamlNode SelectNode(YamlNode node)
+        {
+            YamlNode result = node;
+            foreach (var part in Path)
+            {
+                result = part.SelectNode(ref node) ?? result;
+            }
+            return result;
+        }
     }
 }
