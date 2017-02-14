@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DAF92B56-733A-4A14-A306-3D60BFE84774}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>SimpleSwaggerGenerator</RootNamespace>
+    <AssemblyName>SimpleSwaggerGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AutoRest\core\Model\CollectionFormat.cs" />
+    <Compile Include="AutoRest\core\Model\CompositeType.cs" />
+    <Compile Include="AutoRest\core\Model\Constraint.cs" />
+    <Compile Include="AutoRest\core\Model\DictionaryType.cs" />
+    <Compile Include="AutoRest\core\Model\EnumType.cs" />
+    <Compile Include="AutoRest\core\Model\EnumValue.cs" />
+    <Compile Include="AutoRest\core\Model\HttpMethod.cs" />
+    <Compile Include="AutoRest\core\Model\IChild.cs" />
+    <Compile Include="AutoRest\core\Model\ICodeModel.cs" />
+    <Compile Include="AutoRest\core\Model\IEnumerableWithIndex.cs" />
+    <Compile Include="AutoRest\core\Model\IIdentifier.cs" />
+    <Compile Include="AutoRest\core\Model\IModelType.cs" />
+    <Compile Include="AutoRest\core\Model\IParent.cs" />
+    <Compile Include="AutoRest\core\Model\IVariable.cs" />
+    <Compile Include="AutoRest\core\Model\KnownFormat.cs" />
+    <Compile Include="AutoRest\core\Model\KnownFormatExtensions.cs" />
+    <Compile Include="AutoRest\core\Model\KnownPrimaryType.cs" />
+    <Compile Include="AutoRest\core\Model\Method.cs" />
+    <Compile Include="AutoRest\core\Model\MethodGroup.cs" />
+    <Compile Include="AutoRest\core\Model\Parameter.cs" />
+    <Compile Include="AutoRest\core\Model\ParameterLocation.cs" />
+    <Compile Include="AutoRest\core\Model\ParameterMapping.cs" />
+    <Compile Include="AutoRest\core\Model\ParameterTransformation.cs" />
+    <Compile Include="AutoRest\core\Model\PrimaryType.cs" />
+    <Compile Include="AutoRest\core\Model\Property.cs" />
+    <Compile Include="AutoRest\core\Model\Response.cs" />
+    <Compile Include="AutoRest\core\Model\SequenceType.cs" />
+    <Compile Include="AutoRest\core\Model\SerializationFormat.cs" />
+    <Compile Include="AutoRest\core\Model\XmlProperties.cs" />
+    <Compile Include="AutoRest\core\Model\XmsExtensions\ParameterLocation.cs" />
+    <Compile Include="AutoRest\core\Model\CodeModel.cs" />
+    <Compile Include="AutoRest\core\Utilities\CamelCaseContractResolver.cs" />
+    <Compile Include="AutoRest\core\Utilities\CodeModelContractResolver.cs" />
+    <Compile Include="AutoRest\core\Utilities\DependencyInjection.cs" />
+    <Compile Include="AutoRest\core\Utilities\DependencyInjectionJsonConverter.cs" />
+    <Compile Include="AutoRest\core\Utilities\EqualityComparer.cs" />
+    <Compile Include="AutoRest\core\Utilities\Extensions.cs" />
+    <Compile Include="AutoRest\core\Utilities\Factory.cs" />
+    <Compile Include="AutoRest\core\Utilities\FileSystem.cs" />
+    <Compile Include="AutoRest\core\Utilities\Fixable.cs" />
+    <Compile Include="AutoRest\core\Utilities\GeneratedCollectionConverter.cs" />
+    <Compile Include="AutoRest\core\Utilities\IFileSystem.cs" />
+    <Compile Include="AutoRest\core\Utilities\IndentedStringBuilder.cs" />
+    <Compile Include="AutoRest\core\Utilities\JsonExtensions.cs" />
+    <Compile Include="AutoRest\core\Utilities\MemoryFileSystem.cs" />
+    <Compile Include="AutoRest\core\Utilities\OnDispose.cs" />
+    <Compile Include="AutoRest\core\Utilities\PropertyExtensions.cs" />
+    <Compile Include="AutoRest\core\Utilities\TemplateConstants.cs" />
+    <Compile Include="AutoRest\core\Utilities\ThreadPerTaskScheduler.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\ICopyFrom.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\LinqExtensions.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\ListEx.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\MutableEnumerable.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\OrderedDictionary.cs" />
+    <Compile Include="AutoRest\core\Utilities\Collections\ReEnumerable.cs" />
+    <Compile Include="AutoRest\core\Validation\CollectionRuleAttribute.cs" />
+    <Compile Include="AutoRest\core\Validation\ComparisonContext.cs" />
+    <Compile Include="AutoRest\core\Validation\ComparisonMessage.cs" />
+    <Compile Include="AutoRest\core\Validation\IsIdentifier.cs" />
+    <Compile Include="AutoRest\core\Validation\MessageTemplate.cs" />
+    <Compile Include="AutoRest\core\Validation\MissingValidator.cs" />
+    <Compile Include="AutoRest\core\Validation\NoControlCharacters.cs" />
+    <Compile Include="AutoRest\core\Validation\PropertyNameResolver.cs" />
+    <Compile Include="AutoRest\core\Validation\RecursiveObjectValidator.cs" />
+    <Compile Include="AutoRest\core\Validation\Rule.cs" />
+    <Compile Include="AutoRest\core\Validation\RuleAttribute.cs" />
+    <Compile Include="AutoRest\core\Validation\RuleContext.cs" />
+    <Compile Include="AutoRest\core\Validation\RulesExtensions.cs" />
+    <Compile Include="AutoRest\core\Validation\TypedRule.cs" />
+    <Compile Include="AutoRest\core\Validation\ValidationMessage.cs" />
+    <Compile Include="AutoRest\core\Logging\Logger.cs" />
+    <Compile Include="AutoRest\core\Logging\LogMessage.cs" />
+    <Compile Include="AutoRest\core\Logging\LogMessageSeverity.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\core\Logging\ObjectPath.cs" />
+    <Compile Include="AutoRest\core\Logging\ObjectPathPart.cs" />
+    <Compile Include="AutoRest\core\Logging\ObjectPathPartIndex.cs" />
+    <Compile Include="AutoRest\core\Logging\ObjectPathPartProperty.cs" />
+    <Compile Include="AutoRest\core\Logging\ILogListener.cs" />
+    <Compile Include="AutoRest\core\CodeNamer.cs" />
+    <Compile Include="AutoRest\core\Model\CodeModel.gen.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AutoRest\" />
+    <Folder Include="AutoRest\core\" />
+    <Folder Include="AutoRest\core\Model\" />
+    <Folder Include="AutoRest\core\Model\XmsExtensions\" />
+    <Folder Include="AutoRest\core\Utilities\" />
+    <Folder Include="AutoRest\core\Utilities\Collections\" />
+    <Folder Include="AutoRest\core\Validation\" />
+    <Folder Include="AutoRest\core\Logging\" />
+    <Folder Include="AutoRest\core\Templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="AutoRest\core\Templates\PartialClassProps.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
