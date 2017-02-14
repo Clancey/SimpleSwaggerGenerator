@@ -13,7 +13,6 @@ namespace SimpleSwaggerGenerator.CLI
 				OutputToMemory = true,
 			};
 			var output = generator.Generate();
-			Console.WriteLine(output);
 		}
 	}
 }

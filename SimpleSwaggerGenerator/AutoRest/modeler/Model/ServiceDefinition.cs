@@ -11,6 +11,7 @@ using AutoRest.Core.Logging;
 using AutoRest.Core.Utilities.Collections;
 using AutoRest.Swagger.Validation;
 using System.Text.RegularExpressions;
+using AutoRest.Core.Model;
 
 namespace AutoRest.Swagger.Model
 {

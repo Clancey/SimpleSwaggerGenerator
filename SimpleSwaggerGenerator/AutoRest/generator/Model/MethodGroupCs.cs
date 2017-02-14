@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace AutoRest.CSharp.Model
 {
-    public partial class MethodGroupCs : Core.Model.MethodGroup
+    public partial class 	MethodGroupCs : Core.Model.MethodGroup
     {
         protected MethodGroupCs() : base()
         {

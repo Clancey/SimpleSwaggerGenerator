@@ -44,6 +44,8 @@ namespace AutoRest.Core.Model
         [JsonIgnore]
         public virtual IEnumerableWithIndex<Method> Methods => new ReEnumerable<Method>(Operations.SelectMany(group => group.Methods));
 
+		public virtual List<SecurityDefinition> SecurityDefinitions { get; set; }
+
         public virtual Method Add(Method method)
         {
             if (method.Group.IsNullOrEmpty())

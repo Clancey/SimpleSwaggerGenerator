@@ -126,7 +126,6 @@
     <Compile Include="AutoRest\modeler\JsonConverters\SchemaRequiredItemConverter.cs" />
     <Compile Include="AutoRest\modeler\JsonConverters\SecurityDefinitionConverter.cs" />
     <Compile Include="AutoRest\modeler\JsonConverters\SwaggerJsonConverter.cs" />
-    <Compile Include="AutoRest\modeler\Model\ApiKeyLocation.cs" />
     <Compile Include="AutoRest\modeler\Model\CodeGenerationSettings.cs" />
     <Compile Include="AutoRest\modeler\Model\Contact.cs" />
     <Compile Include="AutoRest\modeler\Model\DataType.cs" />
@@ -134,13 +133,10 @@
     <Compile Include="AutoRest\modeler\Model\Header.cs" />
     <Compile Include="AutoRest\modeler\Model\Info.cs" />
     <Compile Include="AutoRest\modeler\Model\License.cs" />
-    <Compile Include="AutoRest\modeler\Model\OAuthFlow.cs" />
     <Compile Include="AutoRest\modeler\Model\Operation.cs" />
     <Compile Include="AutoRest\modeler\Model\ParameterLocation.cs" />
     <Compile Include="AutoRest\modeler\Model\Response.cs" />
     <Compile Include="AutoRest\modeler\Model\Schema.cs" />
-    <Compile Include="AutoRest\modeler\Model\SecurityDefinition.cs" />
-    <Compile Include="AutoRest\modeler\Model\SecuritySchemeType.cs" />
     <Compile Include="AutoRest\modeler\Model\ServiceDefinition.cs" />
     <Compile Include="AutoRest\modeler\Model\SpecObject.cs" />
     <Compile Include="AutoRest\modeler\Model\SwaggerBase.cs" />
@@ -256,9 +252,6 @@
     <Compile Include="AutoRest\generator\Templates\Common\ModelTemplate.cs">
       <DependentUpon>ModelTemplate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\MethodGroupInterfaceTemplate.cs">
-      <DependentUpon>MethodGroupInterfaceTemplate.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cs">
       <DependentUpon>MethodGroupTemplate.cshtml</DependentUpon>
     </Compile>
@@ -267,9 +260,6 @@
     </Compile>
     <Compile Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cs">
       <DependentUpon>ServiceClientBodyTemplate.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientInterfaceTemplate.cs">
-      <DependentUpon>ServiceClientInterfaceTemplate.cshtml</DependentUpon>
     </Compile>
     <Compile Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cs">
       <DependentUpon>ServiceClientTemplate.cshtml</DependentUpon>
@@ -293,6 +283,11 @@
     <Compile Include="AutoRest\core\CodeGenerator.cs" />
     <Compile Include="AutoRest\core\CodeModelTransformer.cs" />
     <Compile Include="AutoRest\core\Trigger.cs" />
+    <Compile Include="AutoRest\core\Model\ApiKeyLocation.cs" />
+    <Compile Include="AutoRest\core\Model\OAuthFlow.cs" />
+    <Compile Include="AutoRest\core\Model\SecurityDefinition.cs" />
+    <Compile Include="AutoRest\core\Model\SecuritySchemeType.cs" />
+    <Compile Include="AutoRest\generator\Model\ApiModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoRest\" />
@@ -345,10 +340,6 @@
       <Generator>RazorTemplatePreprocessor</Generator>
       <LastGenOutput>ModelTemplate.cs</LastGenOutput>
     </None>
-    <None Include="AutoRest\generator\Templates\Client\MethodGroupInterfaceTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>MethodGroupInterfaceTemplate.cs</LastGenOutput>
-    </None>
     <None Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>
       <LastGenOutput>MethodGroupTemplate.cs</LastGenOutput>
@@ -360,10 +351,6 @@
     <None Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>
       <LastGenOutput>ServiceClientBodyTemplate.cs</LastGenOutput>
-    </None>
-    <None Include="AutoRest\generator\Templates\Client\ServiceClientInterfaceTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>ServiceClientInterfaceTemplate.cs</LastGenOutput>
     </None>
     <None Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>

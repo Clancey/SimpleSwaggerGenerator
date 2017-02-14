@@ -258,7 +258,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 		/// If set to true, skips the validation step. (WILL BE REMOVED)
 		/// </summary>
 		[SettingsAlias("skipvalidation")]
-		public bool SkipValidation { get; set; } = true;
+		public bool SkipValidation { get; set; }
 
 		/// <summary>
 		/// If set, will cause generated code to be output to a single file. Not supported by all code generators.

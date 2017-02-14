@@ -116,6 +116,12 @@ namespace AutoRest.Swagger
 
                 CodeModel.Add(clientProperty);
             }
+			var securityList = new List<SecurityDefinition>();
+			foreach (var sec in serviceDefinition.SecurityDefinitions)
+			{
+				securityList.Add(sec.Value);
+			}
+			CodeModel.SecurityDefinitions = securityList;
 
             var  methods = new List<Method>();
             // Build methods
@@ -144,7 +150,6 @@ namespace AutoRest.Swagger
                     }
                     var methodName = GetMethodName(operation);
                     var methodGroup = GetMethodGroup(operation);
-
                     if (verb.ToHttpMethod() != HttpMethod.Options)
                     {
                         string url = path.Key;
@@ -358,9 +363,13 @@ namespace AutoRest.Swagger
                 throw new ArgumentNullException("operation");
             }
 
+			var tag = operation.Tags?.FirstOrDefault();
+			if (!string.IsNullOrWhiteSpace(tag))
+				return tag;
+
             if (operation.OperationId == null || operation.OperationId.IndexOf('_') == -1)
             {
-                return null;
+				return null;
             }
 
             var parts = operation.OperationId.Split('_');

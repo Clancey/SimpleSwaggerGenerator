@@ -56,8 +56,10 @@ namespace AutoRest.Swagger
                 HttpMethod = httpMethod,
                 Url = url,
                 Name = methodName,
-                SerializedName = _operation.OperationId
+                SerializedName = _operation.OperationId,
+
             });
+			method.Security = _operation.Security.SelectMany(x => x.Keys).ToArray();
 
             // assume that without specifying Consumes, that a service will consume JSON
             method.RequestContentType = _effectiveConsumes.FirstOrDefault() ?? APP_JSON_MIME;

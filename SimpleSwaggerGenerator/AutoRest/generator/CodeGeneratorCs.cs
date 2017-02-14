@@ -21,7 +21,7 @@ namespace AutoRest.CSharp
 {
     public class CodeGeneratorCs : CodeGenerator
     {
-        private const string ClientRuntimePackage = "Microsoft.Rest.ClientRuntime.2.2.0";
+        private const string ClientRuntimePackage = "Clancey.SimpleAuth.1.0.31";
 
         public override bool IsSingleFileGenerationSupported => true;
 
@@ -57,18 +57,33 @@ namespace AutoRest.CSharp
 
 			var isInMemory = Settings.Instance.OutputInMemory;
 
+
+			//TODO: Move this down to the modeler
+			var apis = codeModel.SecurityDefinitions?.ToList();
+			//Taking care of OAuthApiKey apis
+			if (apis?.Count(x => x.SecuritySchemeType == SecuritySchemeType.ApiKey || x.SecuritySchemeType == SecuritySchemeType.OAuth2) == 2)
+			{
+				var oauth = apis.FirstOrDefault(x => x.SecuritySchemeType == SecuritySchemeType.OAuth2);
+				var apikey = apis.FirstOrDefault(x => x.SecuritySchemeType == SecuritySchemeType.ApiKey);
+				oauth.Name = apikey.Name;
+				oauth.ApiKeyName = apikey.Name;
+				oauth.In = apikey.In;
+				oauth.SecuritySchemeType = SecuritySchemeType.OauthApiKey;
+				apis.Remove(apikey);
+			}
+			if (!apis.Any())
+			{
+				apis.Add(new SecurityDefinition());
+			}
+
             // Service client
             var serviceClientTemplate = new ServiceClientTemplate { Model = codeModel };
 			if (isInMemory)
 				GenerateTemplateCode(serviceClientTemplate, sb);
 			else
             	await Write(serviceClientTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
-
-            // Service client interface
-   //         var serviceClientInterfaceTemplate = new ServiceClientInterfaceTemplate { Model = codeModel };
-   //         await Write(serviceClientInterfaceTemplate, $"I{codeModel.Name}{ImplementationFileExtension}");
-			//GenerateTemplateCode(serviceClientInterfaceTemplate, sb);
-
+			
+			var groups = codeModel.Operations.SelectMany(method => method.SecurityDefinitionNames.Select(x => new Tuple<string, MethodGroup>(x, method))).GroupBy(x => x.Item1).ToDictionary(x => x.Key, x => x.Select(y=> y.Item2).ToArray());
             // operations
             foreach (MethodGroupCs methodGroup in codeModel.Operations)
             {
@@ -79,14 +94,8 @@ namespace AutoRest.CSharp
 					if (isInMemory)
 						GenerateTemplateCode(operationsTemplate, sb);
 					else
-                    await Write(operationsTemplate, $"{operationsTemplate.Model.TypeName}{ImplementationFileExtension}");
+                    	await Write(operationsTemplate, $"{operationsTemplate.Model.TypeName}{ImplementationFileExtension}");
 
-                    // Operation interface
-                    var operationsInterfaceTemplate = new MethodGroupInterfaceTemplate { Model = methodGroup };
-					if (isInMemory)
-						GenerateTemplateCode(operationsInterfaceTemplate, sb);
-					else
-                    	await Write(operationsInterfaceTemplate, $"I{operationsInterfaceTemplate.Model.TypeName}{ImplementationFileExtension}");
                 }
 
                 var operationExtensionsTemplate = new ExtensionsTemplate { Model = methodGroup };

@@ -214,6 +214,9 @@ namespace AutoRest.Core.Model
             }
         }
 
+		[JsonIgnore]
+		public virtual string[] SecurityDefinitionNames => Methods.SelectMany(x => x.Security ?? new[] { "" }).Distinct().ToArray();
+
         [JsonIgnore]
         public virtual IEnumerable<IIdentifier> IdentifiersInScope => this.SingleItemConcat(Parent?.IdentifiersInScope);
 

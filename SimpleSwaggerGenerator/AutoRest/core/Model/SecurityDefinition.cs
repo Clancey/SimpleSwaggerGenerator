@@ -5,7 +5,7 @@ using AutoRest.Core.Utilities;
 using System;
 using System.Collections.Generic;
 
-namespace AutoRest.Swagger.Model
+namespace AutoRest.Core.Model
 {
     /// <summary>
     /// Security Scheme Object - https://github.com/wordnik/swagger-spec/blob/master/versions/2.0.md#security-scheme-object-
@@ -23,6 +23,8 @@ namespace AutoRest.Swagger.Model
         }
 
         public string Name { get; set; }
+
+		public string ApiKeyName { get; set; }
 
         public ApiKeyLocation In { get; set; }
 

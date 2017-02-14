@@ -11,6 +11,8 @@ namespace SimpleSwaggerGenerator
 		public string NameSpace { get; set; }
 		public bool OutputToMemory { get; set; }
 		public string OutputFile { get; set; }
+		public bool AutoNameFile { get; set; } = true;
+		public bool SeperateClassesIntoFiles { get; set; } = false;
 
 		public string Generate()
 		{
@@ -18,7 +20,6 @@ namespace SimpleSwaggerGenerator
 			{
 				Settings.Create(new string[0]);
 				Settings.Instance.Namespace = NameSpace;
-				Settings.Instance.OutputFileName = "api.cs";
 				Settings.Instance.SwaggerFilePath = SwaggerFileLocation;
 				Settings.Instance.SwaggerJson = SwaggerJson;
 				Settings.Instance.SwaggerUrl = SwaggerUrl;

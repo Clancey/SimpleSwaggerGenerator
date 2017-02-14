@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSwaggerGenerator.CLI", "SimpleSwaggerGenerator.CLI\SimpleSwaggerGenerator.CLI.csproj", "{31C7F8D3-A871-421B-ABE6-EFEA74423560}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{F51DE01C-C8DD-478B-A220-C92AE885CC74}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleSwaggerGenerator", "SimpleSwaggerGenerator\SimpleSwaggerGenerator.csproj", "{DAF92B56-733A-4A14-A306-3D60BFE84774}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratedAppApi", "Sample\GeneratedAppApi\GeneratedAppApi.csproj", "{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,20 +39,7 @@ Global
 		{DAF92B56-733A-4A14-A306-3D60BFE84774}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{DAF92B56-733A-4A14-A306-3D60BFE84774}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{DAF92B56-733A-4A14-A306-3D60BFE84774}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|x86.Build.0 = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|x86.ActiveCfg = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|x86.Build.0 = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|iPhone.Build.0 = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DBA3F646-1FBD-49AB-9444-2DF7DD9C64E8} = {F51DE01C-C8DD-478B-A220-C92AE885CC74}
 	EndGlobalSection
 EndGlobal

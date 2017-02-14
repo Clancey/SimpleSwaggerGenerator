@@ -56,6 +56,12 @@ namespace AutoRest.Core.Model
                 }
             }
         }
+		public string[] Security { get; set; } = new string[0];
+
+		public bool HasSecurity(string securityName)
+		{
+			return (Security?.Any() != true) || Security.Any(x => x == securityName);
+		}
 
         [JsonIgnore]
         public IParent Parent => MethodGroup;
