@@ -34,6 +34,9 @@
     <Reference Include="YamlDotNet">
       <HintPath>..\packages\YamlDotNet.3.8.0\lib\net35\YamlDotNet.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -218,6 +221,65 @@
     <Compile Include="AutoRest\modeler\Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="AutoRest\generator\ClientModelExtensions.cs" />
+    <Compile Include="AutoRest\generator\Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Model\CodeModelCs.cs" />
+    <Compile Include="AutoRest\generator\Model\CompositeTypeCs.cs" />
+    <Compile Include="AutoRest\generator\Model\ControllerToModelBinderMapping.cs" />
+    <Compile Include="AutoRest\generator\Model\EnumTypeCs.cs" />
+    <Compile Include="AutoRest\generator\Model\MethodCs.cs" />
+    <Compile Include="AutoRest\generator\Model\MethodGroupCs.cs" />
+    <Compile Include="AutoRest\generator\Model\ParameterCs.cs" />
+    <Compile Include="AutoRest\generator\Model\PrimaryTypeCs.cs" />
+    <Compile Include="AutoRest\generator\Model\PropertyCs.cs" />
+    <Compile Include="AutoRest\generator\Model\SequenceTypeCs.cs" />
+    <Compile Include="AutoRest\core\Template.cs" />
+    <Compile Include="AutoRest\generator\SyncMethodsGenerationMode.cs" />
+    <Compile Include="AutoRest\extensions\ClientModelHelpers.cs" />
+    <Compile Include="AutoRest\extensions\GlobalSuppressions.cs" />
+    <Compile Include="AutoRest\extensions\ParameterGroupExtensionHelper.cs" />
+    <Compile Include="AutoRest\extensions\SwaggerExtensions.cs" />
+    <Compile Include="AutoRest\generator\Templates\Common\EnumTemplate.cs">
+      <DependentUpon>EnumTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Common\ExceptionTemplate.cs">
+      <DependentUpon>ExceptionTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Common\ExtensionMethodTemplate.cs">
+      <DependentUpon>ExtensionMethodTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Common\ExtensionsTemplate.cs">
+      <DependentUpon>ExtensionsTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Common\ModelTemplate.cs">
+      <DependentUpon>ModelTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\MethodGroupInterfaceTemplate.cs">
+      <DependentUpon>MethodGroupInterfaceTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cs">
+      <DependentUpon>MethodGroupTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\MethodTemplate.cs">
+      <DependentUpon>MethodTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cs">
+      <DependentUpon>ServiceClientBodyTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientInterfaceTemplate.cs">
+      <DependentUpon>ServiceClientInterfaceTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cs">
+      <DependentUpon>ServiceClientTemplate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\extensions\Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AutoRest\core\ITemplate.cs" />
+    <Compile Include="AutoRest\generator\GeneratorSettingsCs.cs" />
+    <Compile Include="AutoRest\core\Extensibility\IGeneratorSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoRest\" />
@@ -237,10 +299,63 @@
     <Folder Include="AutoRest\core\Parsing\" />
     <Folder Include="AutoRest\modeler\Properties\" />
     <Folder Include="AutoRest\core\Properties\" />
+    <Folder Include="AutoRest\generator\" />
+    <Folder Include="AutoRest\generator\Properties\" />
+    <Folder Include="AutoRest\generator\Model\" />
+    <Folder Include="AutoRest\generator\Templates\" />
+    <Folder Include="AutoRest\extensions\" />
+    <Folder Include="AutoRest\generator\Templates\Client\" />
+    <Folder Include="AutoRest\generator\Templates\Common\" />
+    <Folder Include="AutoRest\extensions\Properties\" />
+    <Folder Include="AutoRest\core\Extensibility\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="AutoRest\core\Templates\PartialClassProps.ttinclude" />
+    <None Include="AutoRest\generator\Templates\Common\EnumTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>EnumTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Common\ExceptionTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ExceptionTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Common\ExtensionMethodTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ExtensionMethodTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Common\ExtensionsTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ExtensionsTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Common\ModelTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ModelTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\MethodGroupInterfaceTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>MethodGroupInterfaceTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>MethodGroupTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\MethodTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>MethodTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ServiceClientBodyTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\ServiceClientInterfaceTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ServiceClientInterfaceTemplate.cs</LastGenOutput>
+    </None>
+    <None Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cshtml">
+      <Generator>RazorTemplatePreprocessor</Generator>
+      <LastGenOutput>ServiceClientTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AutoRest\core\Properties\Resources.resx">
@@ -248,6 +363,14 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="AutoRest\modeler\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoRest\generator\Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AutoRest\extensions\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
