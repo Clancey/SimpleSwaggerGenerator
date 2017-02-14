@@ -1,4 +1,4 @@
-﻿@__class AutoRest.CSharp.Templates.Rest.Client.ServiceTemplate
+﻿@__class AutoRest.CSharp.Templates.Rest.Client.ServiceClientTemplate
 @using System
 @using System.Linq
 @using AutoRest.Core.Utilities
@@ -21,7 +21,7 @@ namespace @Settings.Namespace
     @:/// </summary>
     }
 
-    public partial class @Model.Name : Microsoft.Rest.ServiceClient<@Model.Name>, I@(Model.Name)
+    public partial class @Model.Name : Microsoft.Rest.ServiceClient<@Model.Name>
     {
         @(Include(new ServiceClientBodyTemplate(), Model))
 

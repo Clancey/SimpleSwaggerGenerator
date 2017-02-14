@@ -23,7 +23,7 @@ using System.Text;
 
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorTemplatePreprocessor", "2.6.0.0")]
-public partial class ExeptionsTemplate : AutoRest.Core.Template<AutoRest.CSharp.Model.CompositeTypeCs>
+public partial class ExceptionTemplate : AutoRest.Core.Template<AutoRest.CSharp.Model.CompositeTypeCs>
 {
 
 #line hidden

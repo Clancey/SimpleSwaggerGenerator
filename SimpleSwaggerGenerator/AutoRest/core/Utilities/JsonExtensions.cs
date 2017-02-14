@@ -18,7 +18,7 @@ namespace AutoRest.Core.Utilities
         {
             internal string AssemblyName { get; set; }
             internal string TypeName { get; set; }
-            internal Type Type => AssemblyName != null ? Assembly.Load(new AssemblyName(AssemblyName)).GetType(TypeName) : Type.GetType(TypeName);
+            internal Type Type =>  Type.GetType(TypeName);
         }
 
         internal static TypeNameKey GetTypeDeclaration(this JObject jObject)

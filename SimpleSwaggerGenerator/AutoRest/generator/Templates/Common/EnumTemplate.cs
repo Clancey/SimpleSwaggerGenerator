@@ -29,11 +29,11 @@ using AutoRest.Core.Model;
 
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorTemplatePreprocessor", "2.6.0.0")]
-public partial class EnumTemplates : AutoRest.Core.Template<AutoRest.CSharp.Model.EnumTypeCs>
+public partial class EnumTemplate : AutoRest.Core.Template<AutoRest.CSharp.Model.EnumTypeCs>
 {
 
 #line hidden
-		 
+
 public override void Execute()
 {
 

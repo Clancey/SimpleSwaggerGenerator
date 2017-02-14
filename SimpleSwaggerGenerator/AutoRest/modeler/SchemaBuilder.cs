@@ -7,7 +7,7 @@ using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
 using AutoRest.Swagger.Model;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using static AutoRest.Core.Utilities.DependencyInjection;
 using System.Linq;
 

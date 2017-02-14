@@ -135,32 +135,29 @@ namespace AutoRest.Core.Utilities
 
         public class IsSingleton<T>
         {
-            public static T Instance => Singleton<T>.Instance;
+			public static T Instance => Singleton.Instance<T>();
         }
 
-        public class Singleton<T>
+        public static class Singleton
         {
-            public static bool HasInstanceInCurrentActivation => Activation.Current.Singletons.ContainsKey(typeof(T));
+			public static bool HasInstanceInCurrentActivation<T>() => Activation.Current.Singletons.ContainsKey(typeof(T));
 
-            public static bool HasInstance
+			public static bool HasInstance<T>()
             {
-                get
+                for (var c = Activation.Current; c != null; c = c.Parent)
                 {
-                    for (var c = Activation.Current; c != null; c = c.Parent)
+                    if (c.Singletons.ContainsKey(typeof(T)))
                     {
-                        if (c.Singletons.ContainsKey(typeof(T)))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
-                    return false;
                 }
+                return false;
+                
             }
 
-            public static T Instance
+			public static T Instance<T>()
             {
-                get
-                {
+                
                     // check for the exact match
                     for (var c = Activation.Current; c != null; c = c.Parent)
                     {
@@ -182,38 +179,41 @@ namespace AutoRest.Core.Utilities
                         }
                     }
                     return default(T);
-                }
-                set { Activation.Default.Singletons.AddOrSet(typeof(T), value); }
             }
-
+			public static void SetInstance<T>(T value)
+			{
+				Activation.Default.Singletons.AddOrSet(typeof(T), value);
+			}
+			public static void SetInstance(object value, Type type)
+			{
+				Activation.Default.Singletons.AddOrSet(type, value);
+			}
             /// <summary>
             /// Retrieves the singleton of this but also the parent contexts, if existing.
             /// </summary>
-            public static IEnumerable<T> RecursiveInstances
+			public static IEnumerable<T> RecursiveInstances<T>()
             {
-                get
+                Type key = typeof(T);
+                for (var c = Activation.Current; c != null; c = c.Parent)
                 {
-                    Type key = typeof(T);
-                    for (var c = Activation.Current; c != null; c = c.Parent)
+                    if (c.Singletons.ContainsKey(key))
                     {
-                        if (c.Singletons.ContainsKey(key))
-                        {
-                            yield return (T)c.Singletons[key];
-                        }
+                        yield return (T)c.Singletons[key];
                     }
                 }
+                
             }
         }
 
-        /// <summary>
-        /// Convenience methods for singletons that are of type IEnumerable&lt;T&gt;
-        /// </summary>
-        public class SingletonList<T>
+        ///// <summary>
+        ///// Convenience methods for singletons that are of type IEnumerable&lt;T&gt;
+        ///// </summary>
+        public static class SingletonList
         {
             /// <summary>
             /// Adds given item to the current context.
             /// </summary>
-            public static void Add(T item)
+            public static void Add<T>(T item)
             {
                 if (!Activation.Current.Singletons.ContainsKey(typeof(IEnumerable<T>)))
                 {
@@ -225,12 +225,9 @@ namespace AutoRest.Core.Utilities
             /// <summary>
             /// For retrieving singletons that are lists while also considering the list items of parent contexts.
             /// </summary>
-            public static IEnumerable<T> RecursiveInstances
+			public static IEnumerable<T> RecursiveInstances<T>()
             {
-                get
-                {
-                    return Singleton<IEnumerable<T>>.RecursiveInstances.SelectMany(list => list);
-                }
+				return Singleton.RecursiveInstances<IEnumerable<T>>().SelectMany(list => list);
             }
         }
 

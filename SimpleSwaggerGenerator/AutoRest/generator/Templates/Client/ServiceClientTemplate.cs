@@ -46,7 +46,7 @@ using AutoRest.CSharp.Templates;
 
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorTemplatePreprocessor", "2.6.0.0")]
-public partial class ServiceTemplate : AutoRest.Core.Template<CodeModelCs>
+public partial class ServiceClientTemplate : AutoRest.Core.Template<CodeModelCs>
 {
 
 #line hidden
@@ -174,16 +174,7 @@ WriteLiteral(" : Microsoft.Rest.ServiceClient<");
 
 #line default
 #line hidden
-WriteLiteral(">, I");
-
-
-#line 24 "ServiceClientTemplate.cshtml"
-                                                                               Write(Model.Name);
-
-
-#line default
-#line hidden
-WriteLiteral("\n    {\n");
+WriteLiteral(">\n    {\n");
 
 WriteLiteral("        ");
 

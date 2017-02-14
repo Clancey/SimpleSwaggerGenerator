@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -10,10 +10,11 @@ using AutoRest.Core.Parsing;
 using AutoRest.Core.Utilities;
 using AutoRest.Swagger.JsonConverters;
 using AutoRest.Swagger.Model;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Net;
 
 namespace AutoRest.Swagger
 {
@@ -31,6 +32,17 @@ namespace AutoRest.Swagger
             var swaggerDocument = fileSystem.ReadFileAsText(path);
             return Parse(path, swaggerDocument);
         }
+		public static ServiceDefinition Load(string swaggerDocument)
+		{
+			return Parse("memory", swaggerDocument);
+		}
+
+		public static ServiceDefinition LoadUrl(string url)
+		{
+			var client = new WebClient();
+			var swaggerDocument = client.DownloadString(url);
+			return Parse("memory", swaggerDocument);
+		}
 
         public static string ResolveExternalReferencesInJson(this string path, string swaggerDocument)
         {

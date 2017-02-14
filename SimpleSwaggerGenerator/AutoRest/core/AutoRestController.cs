@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -6,7 +6,7 @@ using System.Diagnostics;
 using AutoRest.Core.Model;
 //using AutoRest.Core.Extensibility;
 using AutoRest.Core.Logging;
-using AutoRest.Core.Properties;
+using SimpleSwaggerGenerator.AutoRest.core.Properties;
 using AutoRest.Core.Validation;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,124 +34,92 @@ namespace AutoRest.Core
         /// <summary>
         /// Generates client using provided settings.
         /// </summary>
-        //public static void Generate()
-        //{
-        //    if (Settings.Instance == null)
-        //    {
-        //        throw new ArgumentNullException("settings");
-        //    }
-        //    Logger.Instance.Log(Category.Info, Resources.AutoRestCore, Version);
+        public static string Generate()
+        {
+            if (Settings.Instance == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+            Logger.Instance.Log(Category.Info, Resources.AutoRestCore, Version);
             
-        //    CodeModel codeModel = null;
+            CodeModel codeModel = null;
             
-        //    var modeler = ExtensionsLoader.GetModeler();
+			var modeler = new Swagger.SwaggerModeler();
 
-        //    try
-        //    {
-        //        using (NewContext)
-        //        {
-        //            bool validationErrorFound = false;
-        //            Logger.Instance.AddListener(new SignalingLogListener(Settings.Instance.ValidationLevel, _ => validationErrorFound = true));
+            try
+            {
+                using (NewContext)
+                {
+                    bool validationErrorFound = false;
+                    //Logger.Instance.AddListener(new SignalingLogListener(Settings.Instance.ValidationLevel, _ => validationErrorFound = true));
 
-        //            // generate model from swagger 
-        //            codeModel = modeler.Build();
+                    // generate model from swagger 
+                    codeModel = modeler.Build();
 
-        //            // After swagger Parser
-        //            codeModel = RunExtensions(Trigger.AfterModelCreation, codeModel);
+                    if (validationErrorFound)
+                    {
+                        Logger.Instance.Log(Category.Error, "Errors found during Swagger validation");
+                    }
+                }
 
-        //            // After swagger Parser
-        //            codeModel = RunExtensions(Trigger.BeforeLoadingLanguageSpecificModel, codeModel);
+            }
+            catch (Exception exception)
+            {
+                throw ErrorManager.CreateError(Resources.ErrorGeneratingClientModel, exception);
+            }
 
-        //            if (validationErrorFound)
-        //            {
-        //                Logger.Instance.Log(Category.Error, "Errors found during Swagger validation");
-        //            }
-        //        }
+			var plugin = new CSharp.PluginCs();
 
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        throw ErrorManager.CreateError(Resources.ErrorGeneratingClientModel, exception);
-        //    }
+            Console.ResetColor();
+            Console.WriteLine(plugin.CodeGenerator.UsageInstructions);
 
-        //    var plugin = ExtensionsLoader.GetPlugin();
+            Settings.Instance.Validate();
+            //try
+            //{
+                var genericSerializer = new ModelSerializer<CodeModel>();
+                var modelAsJson = genericSerializer.ToJson(codeModel);
 
-        //    Console.ResetColor();
-        //    Console.WriteLine(plugin.CodeGenerator.UsageInstructions);
+                // ensure once we're doing language-specific work, that we're working
+                // in context provided by the language-specific transformer. 
+                using (plugin.Activate())
+                {
+                    // load model into language-specific code model
+                    codeModel = plugin.Serializer.Load(modelAsJson);
 
-        //    Settings.Instance.Validate();
-        //    try
-        //    {
-        //        var genericSerializer = new ModelSerializer<CodeModel>();
-        //        var modelAsJson = genericSerializer.ToJson(codeModel);
-
-        //        // ensure once we're doing language-specific work, that we're working
-        //        // in context provided by the language-specific transformer. 
-        //        using (plugin.Activate())
-        //        {
-        //            // load model into language-specific code model
-        //            codeModel = plugin.Serializer.Load(modelAsJson);
-
-        //            // we've loaded the model, run the extensions for after it's loaded
-        //            codeModel = RunExtensions(Trigger.AfterLoadingLanguageSpecificModel, codeModel);
+                    // we've loaded the model, run the extensions for after it's loaded
+                    codeModel = RunExtensions(Trigger.AfterLoadingLanguageSpecificModel, codeModel);
      
-        //            // apply language-specific tranformation (more than just language-specific types)
-        //            // used to be called "NormalizeClientModel" . 
-        //            codeModel = plugin.Transformer.TransformCodeModel(codeModel);
+                    // apply language-specific tranformation (more than just language-specific types)
+                    // used to be called "NormalizeClientModel" . 
+                    codeModel = plugin.Transformer.TransformCodeModel(codeModel);
 
-        //            // next set of extensions
-        //            codeModel = RunExtensions(Trigger.AfterLanguageSpecificTransform, codeModel);
+                    // next set of extensions
+                    codeModel = RunExtensions(Trigger.AfterLanguageSpecificTransform, codeModel);
 
 
-        //            // next set of extensions
-        //            codeModel = RunExtensions(Trigger.BeforeGeneratingCode, codeModel);
+                    // next set of extensions
+                    codeModel = RunExtensions(Trigger.BeforeGeneratingCode, codeModel);
 
-        //            // Generate code from CodeModel.
-        //            plugin.CodeGenerator.Generate(codeModel).GetAwaiter().GetResult();
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        throw ErrorManager.CreateError(Resources.ErrorSavingGeneratedCode, exception);
-        //    }
-        //}
+                    // Generate code from CodeModel.
+                    return plugin.CodeGenerator.Generate(codeModel).GetAwaiter().GetResult();
+                }
+			//}
+            //catch (Exception exception)
+            //{
+            //    throw ErrorManager.CreateError(Resources.ErrorSavingGeneratedCode, exception);
+            //}
+        }
 
-        //public static CodeModel RunExtensions(Trigger trigger, CodeModel codeModel)
-        //{
-        //    /*
-        //     foreach (var extension in extensions.Where(each => each.trigger == trugger).SortBy(each => each.Priority))
-        //         codeModel = extension.Transform(codeModel);
-        //    */
+        public static CodeModel RunExtensions(Trigger trigger, CodeModel codeModel)
+		{
+			/*
+             foreach (var extension in extensions.Where(each => each.trigger == trugger).SortBy(each => each.Priority))
+                 codeModel = extension.Transform(codeModel);
+            */
 
-        //    return codeModel;
-        //}
+			return codeModel;
+		}
 
-        ///// <summary>
-        ///// Compares two specifications.
-        ///// </summary>
-        //public static void Compare()
-        //{
-        //    if (Settings.Instance == null)
-        //    {
-        //        throw new ArgumentNullException("settings");
-        //    }
-        //    Logger.Instance.Log(Category.Info, Resources.AutoRestCore, Version);
-        //    Modeler modeler = ExtensionsLoader.GetModeler();
-
-        //    try
-        //    {
-        //        IEnumerable<ComparisonMessage> messages = modeler.Compare();
-
-        //        foreach (var message in messages)
-        //        {
-        //            Logger.Instance.Log(message);
-        //        }
-        //    }
-        //    catch (Exception exception)
-        //    {
-        //        throw ErrorManager.CreateError(Resources.ErrorGeneratingClientModel, exception);
-        //    }
-
-        //}
+  
     }
 }

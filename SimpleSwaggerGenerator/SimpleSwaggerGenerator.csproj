@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SimpleSwaggerGenerator</RootNamespace>
     <AssemblyName>SimpleSwaggerGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -280,6 +280,19 @@
     <Compile Include="AutoRest\core\ITemplate.cs" />
     <Compile Include="AutoRest\generator\GeneratorSettingsCs.cs" />
     <Compile Include="AutoRest\core\Extensibility\IGeneratorSettings.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="AutoRest\generator\PluginCs.cs" />
+    <Compile Include="AutoRest\core\Extensibility\IPlugin.cs" />
+    <Compile Include="AutoRest\core\Extensibility\Plugin.cs" />
+    <Compile Include="AutoRest\core\ModelSerializer.cs" />
+    <Compile Include="AutoRest\core\IModelSerializer.cs" />
+    <Compile Include="AutoRest\core\ITransformer.cs" />
+    <Compile Include="AutoRest\generator\CodeGeneratorCs.cs" />
+    <Compile Include="AutoRest\generator\CodeNamerCs.cs" />
+    <Compile Include="AutoRest\generator\TransformerCs.cs" />
+    <Compile Include="AutoRest\core\CodeGenerator.cs" />
+    <Compile Include="AutoRest\core\CodeModelTransformer.cs" />
+    <Compile Include="AutoRest\core\Trigger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AutoRest\" />
@@ -361,6 +374,7 @@
     <EmbeddedResource Include="AutoRest\core\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LogicalName>AutoRest.Core.Properties.Resources.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="AutoRest\modeler\Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

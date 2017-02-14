@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics.CodeAnalysis;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using AutoRest.Core.Validation;
 using AutoRest.Swagger.Validation;
 using Newtonsoft.Json;

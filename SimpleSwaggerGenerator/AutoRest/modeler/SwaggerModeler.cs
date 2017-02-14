@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -12,7 +12,7 @@ using AutoRest.Core.Logging;
 using AutoRest.Core.Utilities;
 using AutoRest.Core.Utilities.Collections;
 using AutoRest.Swagger.Model;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using ParameterLocation = AutoRest.Swagger.Model.ParameterLocation;
 using AutoRest.Core.Validation;
 using static AutoRest.Core.Utilities.DependencyInjection;
@@ -64,13 +64,25 @@ namespace AutoRest.Swagger
         public override CodeModel Build()
         {
             Logger.Instance.Log(Category.Info, Resources.ParsingSwagger);
-            if (string.IsNullOrWhiteSpace(Settings.Input))
-            {
-                throw ErrorManager.CreateError(Resources.InputRequired);
-            }
-            var serviceDefinition = SwaggerParser.Load(Settings.Input, Settings.FileSystem);
+
+			var serviceDefinition = LoadServiceDefinition();
             return Build(serviceDefinition);
         }
+
+		ServiceDefinition LoadServiceDefinition()
+		{
+
+			if (!string.IsNullOrWhiteSpace(Settings.SwaggerJson))
+				return SwaggerParser.Load(Settings.SwaggerJson);
+			
+			if (!string.IsNullOrWhiteSpace(Settings.SwaggerUrl))
+				return SwaggerParser.LoadUrl(Settings.SwaggerUrl);
+			
+			if (!string.IsNullOrWhiteSpace(Settings.SwaggerFilePath))
+				return SwaggerParser.Load(Settings.SwaggerFilePath, Settings.FileSystem);
+		
+			throw ErrorManager.CreateError(Resources.InputRequired);
+		}
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
         public CodeModel Build(ServiceDefinition serviceDefinition)
@@ -114,11 +126,21 @@ namespace AutoRest.Swagger
                     var operation = path.Value[verb];
                     if (string.IsNullOrWhiteSpace(operation.OperationId))
                     {
-                        throw ErrorManager.CreateError(
-                            string.Format(CultureInfo.InvariantCulture,
-                                Resources.OperationIdMissing,
-                                verb,
-                                path.Key));
+                        var parts = path.Key.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+						Func<string, string> upperCaseFirst = null;
+						upperCaseFirst = new Func<string, string>((s) =>
+						 {
+							 if (string.IsNullOrWhiteSpace(s?.Trim()))
+								 return s;
+							 var a = s.ToCharArray();
+							 a[0] = char.ToUpper(a[0]);
+							 return new string(a);
+						 });
+						var validParts = parts?.Where(x => !x.StartsWith("{"))?.Select(upperCaseFirst)?.ToArray();
+						var betterName = validParts?.Any() ?? false ? string.Join("", validParts) : path.Key;
+						if (betterName.IndexOf(verb, StringComparison.CurrentCultureIgnoreCase) < 0)
+							betterName = upperCaseFirst(verb) + betterName;
+						operation.OperationId = betterName;
                     }
                     var methodName = GetMethodName(operation);
                     var methodGroup = GetMethodGroup(operation);
@@ -171,13 +193,13 @@ namespace AutoRest.Swagger
         public override IEnumerable<ComparisonMessage> Compare()
         {
             Logger.Instance.Log(Category.Info, Resources.ParsingSwagger);
-            if (string.IsNullOrWhiteSpace(Settings.Input) || string.IsNullOrWhiteSpace(Settings.Previous))
+            if (string.IsNullOrWhiteSpace(Settings.SwaggerFilePath) || string.IsNullOrWhiteSpace(Settings.Previous))
             {
                 throw ErrorManager.CreateError(Resources.InputRequired);
             }
 
             var oldDefintion = SwaggerParser.Load(Settings.Previous, Settings.FileSystem);
-            var newDefintion = SwaggerParser.Load(Settings.Input, Settings.FileSystem);
+            var newDefintion = SwaggerParser.Load(Settings.SwaggerFilePath, Settings.FileSystem);
 
             var context = new ComparisonContext(oldDefintion, newDefintion);
 

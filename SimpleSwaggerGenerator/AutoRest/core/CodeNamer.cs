@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using AutoRest.Core.Model;
-using AutoRest.Core.Properties;
+using SimpleSwaggerGenerator.AutoRest.core.Properties;
 using AutoRest.Core.Utilities;
 using AutoRest.Core.Utilities.Collections;
 using AutoRest.Core.Validation;

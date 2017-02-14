@@ -47,10 +47,7 @@ namespace AutoRest.Core
         /// <summary>
         /// Execute an individual request.
         /// </summary>
-        public virtual Task ExecuteAsync()
-        {
-            return null;
-        }
+
 		public virtual void Execute()
 		{
 			//return null;
@@ -267,7 +264,9 @@ namespace AutoRest.Core
                 var existingOutput = TextWriter;
                 using (TextWriter = new StringWriter(sb, CultureInfo.InvariantCulture))
                 {
-                    ExecuteAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+					if (Settings == null)
+						Settings = Settings.Instance;
+					Execute();
                 }
                 TextWriter = existingOutput;
             }

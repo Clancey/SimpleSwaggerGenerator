@@ -12,7 +12,7 @@ using AutoRest.Core.Model;
 using AutoRest.Core.Logging;
 using AutoRest.Core.Utilities;
 using AutoRest.Swagger.Model;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using ParameterLocation = AutoRest.Swagger.Model.ParameterLocation;
 
 using static AutoRest.Core.Utilities.DependencyInjection;

@@ -24,6 +24,8 @@ namespace AutoRest.Core
         /// <summary>
         /// Execute an individual request.
         /// </summary>
-        Task ExecuteAsync();
+        //Task ExecuteAsync();
+
+        void Execute();
     }
 }

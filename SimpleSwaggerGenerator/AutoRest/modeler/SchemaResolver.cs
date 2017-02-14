@@ -98,7 +98,7 @@ namespace AutoRest.Swagger
                     {
                         throw new ArgumentException(
                             string.Format(CultureInfo.InvariantCulture,
-                            Properties.Resources.InvalidTypeExtendsWithAllOf, schema.Title));
+							SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.InvalidTypeExtendsWithAllOf, schema.Title));
                     }
 
                     schema.Extends = references[0].Reference;
@@ -132,7 +132,7 @@ namespace AutoRest.Swagger
                                 {
                                     throw new InvalidOperationException(
                                         string.Format(CultureInfo.InvariantCulture,
-                                        Properties.Resources.IncompatibleTypesInSchemaComposition,
+										SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.IncompatibleTypesInSchemaComposition,
                                             propertyName,
                                             unwrappedComponent.Properties[propertyName].Type,
                                             schema.Properties[propertyName].Type,
@@ -149,7 +149,7 @@ namespace AutoRest.Swagger
                                     {
                                         throw new InvalidOperationException(
                                             string.Format(CultureInfo.InvariantCulture,
-                                                Properties.Resources.IncompatibleTypesInBaseSchema, propertyName,
+												SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.IncompatibleTypesInBaseSchema, propertyName,
                                                 parentProperty.Type,
                                                 unwrappedProperty.Type, schema.Title));
                                     }
@@ -189,7 +189,7 @@ namespace AutoRest.Swagger
                 var setDescription = "(" + String.Join(", ", referenceChain) + ")";
                 throw new InvalidOperationException(
                     string.Format(CultureInfo.InvariantCulture,
-                    Properties.Resources.CircularBaseSchemaSet, setDescription));
+					SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.CircularBaseSchemaSet, setDescription));
             }
 
             if (schema.AllOf != null)
@@ -335,19 +335,19 @@ namespace AutoRest.Swagger
             if (visitedReferences.Contains(referencePath.ToUpperInvariant()))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Properties.Resources.CircularReference, referencePath));
+					SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.CircularReference, referencePath));
             }
 
             if (visitedReferences.Count >= MaximumReferenceDepth)
             {
-                throw new ArgumentException(Properties.Resources.ExceededMaximumReferenceDepth, referencePath);
+                throw new ArgumentException(SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.ExceededMaximumReferenceDepth, referencePath);
             }
             visitedReferences.Add(referencePath.ToUpperInvariant());
             var definitions = _serviceDefinition.Definitions;
             if (definitions == null || !definitions.ContainsKey(referencePath.StripDefinitionPath()))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Properties.Resources.ReferenceDoesNotExist,
+					SimpleSwaggerGenerator.AutoRest.modeler.Properties.Resources.ReferenceDoesNotExist,
                     referencePath.StripDefinitionPath()));
             }
 

@@ -6,7 +6,14 @@ namespace SimpleSwaggerGenerator.CLI
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			var generator = new Generator
+			{
+				SwaggerFileLocation = "/Users/clancey/Downloads/swagger.json",
+				NameSpace = "MobileCenterApis",
+				OutputToMemory = true,
+			};
+			var output = generator.Generate();
+			Console.WriteLine(output);
 		}
 	}
 }

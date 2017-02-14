@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 using AutoRest.Core;
 using AutoRest.Core.Model;
 using AutoRest.Core.Utilities;
-using AutoRest.Extensions.Properties;
+using SimpleSwaggerGenerator.AutoRest.extensions.Properties;
 using AutoRest.Swagger;
 using AutoRest.Swagger.Model;
 using Newtonsoft.Json;

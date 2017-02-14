@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Text;
 using AutoRest.Core.Model;
 using AutoRest.Swagger.Model;
-using AutoRest.Swagger.Properties;
+using SimpleSwaggerGenerator.AutoRest.modeler.Properties;
 using ParameterLocation = AutoRest.Swagger.Model.ParameterLocation;
 
 namespace AutoRest.Swagger

@@ -10,55 +10,64 @@ using static AutoRest.Core.Utilities.DependencyInjection;
 
 namespace AutoRest.Core.Logging
 {
-    /// <summary>
-    /// Aggregator for error, warning, and trace messages.
-    /// </summary>
-    public class Logger
-    {
-        public static Logger Instance  = new Logger();
-		public bool Verbose { get; set; }
-        protected Logger()
-        {
-            if (!Context.IsActive)
-            {
-                throw new Exception("A context must be active before creating a logger.");
-            }
-            if (Singleton<Logger>.HasInstanceInCurrentActivation)
-            {
-                throw new Exception("The current context already has a logger. (Did you mean to create a nested context?)");
-            }
-        }
+	/// <summary>
+	/// Aggregator for error, warning, and trace messages.
+	/// </summary>
+	public class Logger
+	{
+		public static Logger Instance
+		{
+			get
+			{
+				if (!Singleton.HasInstance<Logger>())
+				{
+					Singleton.SetInstance(new Logger());
+				}
+				return Singleton.Instance<Logger>();
+			}
+		}
 
-        /// <summary>
-        /// Adds given listener to the current context.
-        /// </summary>
-        public void AddListener(ILogListener listener)
-        {
-            Listeners.Add(listener);
-        }
-		static List<ILogListener> Listeners = new List<ILogListener>();
-        
-        public void Log(LogMessage message)
-        {
-            foreach (var listener in Listeners)
-            {
-                listener.Log(message);
-            }
-        }
+		protected Logger()
+		{
+			if (!Context.IsActive)
+			{
+				throw new Exception("A context must be active before creating a logger.");
+			}
+			if (Singleton.HasInstanceInCurrentActivation<Logger>())
+			{
+				throw new Exception("The current context already has a logger. (Did you mean to create a nested context?)");
+			}
+		}
 
-        /// <summary>
-        /// Logs a message of specified severity.
-        /// </summary>
-        /// <param name="severity">Severity of the message.</param>
-        /// <param name="message">Message to log. May include formatting.</param>
-        /// <param name="args">Optional arguments to use if message includes formatting.</param>
-        public void Log(Category severity, string message, params object[] args)
-        {
-            if (args != null && args.Length > 0)
-            {
-                message = string.Format(CultureInfo.InvariantCulture, message, args);
-            }
-            Log(new LogMessage(severity, message));
-        }
-    }
+		/// <summary>
+		/// Adds given listener to the current context.
+		/// </summary>
+		public void AddListener(ILogListener listener)
+		{
+			SingletonList.Add<ILogListener>(listener);
+		}
+
+		public void Log(LogMessage message)
+		{
+			foreach (var listener in SingletonList.RecursiveInstances<ILogListener>())
+			{
+				listener.Log(message);
+			}
+		}
+
+		/// <summary>
+		/// Logs a message of specified severity.
+		/// </summary>
+		/// <param name="severity">Severity of the message.</param>
+		/// <param name="message">Message to log. May include formatting.</param>
+		/// <param name="args">Optional arguments to use if message includes formatting.</param>
+		public void Log(Category severity, string message, params object[] args)
+		{
+			if (args != null && args.Length > 0)
+			{
+				message = string.Format(CultureInfo.InvariantCulture, message, args);
+			}
+			Log(new LogMessage(severity, message));
+		}
+	}
 }
