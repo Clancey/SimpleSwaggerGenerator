@@ -153,7 +153,7 @@ namespace AutoRest.Swagger
             // Response format
             List<Stack<IModelType>> typesList = BuildResponses(method, headerType);
 
-            method.ReturnType = BuildMethodReturnType(typesList, headerType);
+            method.ReturnType = BuildMethodReturnType(method, typesList, headerType);
             if (method.Responses.Count == 0)
             {
                 method.ReturnType = method.DefaultResponse;
@@ -257,9 +257,8 @@ namespace AutoRest.Swagger
             return typesList;
         }
 
-        private Response BuildMethodReturnType(List<Stack<IModelType>> types, IModelType headerType)
+        private Response BuildMethodReturnType(Method method, List<Stack<IModelType>> types, IModelType headerType)
         {
-            IModelType baseType = New<PrimaryType>(KnownPrimaryType.Object);
             // Return null if no response is specified
             if (types.Count == 0)
             {
@@ -270,41 +269,18 @@ namespace AutoRest.Swagger
             {
                 return new Response(types.First().Pop(), headerType);
             }
-
-            // BuildParameter up type inheritance tree
-            types.ForEach(typeStack =>
+            Response okResponse;
+            if (method.Responses.TryGetValue(HttpStatusCode.OK, out okResponse) 
+                || method.Responses.TryGetValue(HttpStatusCode.Created, out okResponse)
+                || method.Responses.TryGetValue(HttpStatusCode.NoContent, out okResponse))
             {
-                IModelType type = typeStack.Peek();
-                while (!Equals(type, baseType))
-                {
-                    if (type is CompositeType && _swaggerModeler.ExtendedTypes.ContainsKey(type.Name.RawValue))
-                    {
-                        type = _swaggerModeler.GeneratedTypes[_swaggerModeler.ExtendedTypes[type.Name.RawValue]];
-                    }
-                    else
-                    {
-                        type = baseType;
-                    }
-                    typeStack.Push(type);
-                }
-            });
-
-            // Eliminate commonly shared base classes
-            while (!types.First().IsNullOrEmpty())
-            {
-                IModelType currentType = types.First().Peek();
-                foreach (var typeStack in types)
-                {
-                    IModelType t = typeStack.Pop();
-                    if (!t.StructurallyEquals(currentType))
-                    {
-                        return new Response(baseType, headerType);
-                    }
-                }
-                baseType = currentType;
+                return new Response(okResponse.Body, headerType);
             }
-
-            return new Response(baseType, headerType);
+            else
+            {
+                return new Response(null, headerType);
+            }
+           
         }
 
         private bool TryBuildStreamResponse(HttpStatusCode responseStatusCode, OperationResponse response,
