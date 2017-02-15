@@ -119,6 +119,7 @@ namespace AutoRest.Swagger
 			var securityList = new List<SecurityDefinition>();
 			foreach (var sec in serviceDefinition.SecurityDefinitions)
 			{
+				sec.Value.ApiKey = sec.Key;
 				securityList.Add(sec.Value);
 			}
 			CodeModel.SecurityDefinitions = securityList;

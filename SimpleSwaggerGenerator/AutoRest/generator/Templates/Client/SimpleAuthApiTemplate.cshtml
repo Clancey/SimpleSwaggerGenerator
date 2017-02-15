@@ -1,0 +1,80 @@
+﻿@__class AutoRest.CSharp.Templates.Rest.Client.SimpleAuthApiTemplate
+@using System
+@using System.Linq
+@using AutoRest.Core.Utilities
+@using AutoRest.Core.Model;
+@using AutoRest.CSharp.Model
+@using AutoRest.CSharp.Templates
+@inherits AutoRest.Core.Template<ApiModel>
+@Header("// ")
+@EmptyLine
+namespace @Settings.Namespace
+{
+    using SimpleAuth;
+@foreach (var usingString in Model.CodeModel.Usings) {
+    @:using @usingString;
+}
+
+    @EmptyLine
+    @if (!string.IsNullOrWhiteSpace(Model.CodeModel.Documentation))
+    {
+    @:/// <summary>
+    @:@WrapComment("/// ", Model.CodeModel.Documentation.EscapeXmlComment())
+    @:/// </summary>
+    }
+
+    public partial class @Model.Name : @Model.ApiSubclass
+    {
+    	/// <summary>
+        /// An optional partial-method to perform custom initialization.
+        ///</summary>
+        partial void CustomInitialize();
+
+        @foreach (var operation in Model.Operations)
+        {
+        @:/// <summary>
+        @:/// Gets the @(operation.TypeName).
+        @:/// </summary>
+        @:public virtual @(operation.TypeName) @(operation.NameForProperty) { get; private set; }
+        @EmptyLine
+        }
+
+        /// <summary>
+        /// Initializes client properties.
+        /// </summary>
+        private void Initialize()
+        {
+        @foreach (var operation in Model.Operations)
+        {
+            @:this.@(operation.NameForProperty) = new @(operation.TypeName)(this);
+        }
+
+
+        @if (Model.CodeModel.IsCustomBaseUri)
+        {
+            @:this.BaseUri = "@Model.CodeModel.BaseUrl";
+        }
+        else
+        {
+            @:this.BaseUri = new System.Uri("@Model.CodeModel.BaseUrl");
+        }
+
+            CustomInitialize();
+        }
+
+        @foreach (MethodCs method in Model.CodeModel.Methods.Where( m => m.Group.IsNullOrEmpty() && (m.HasSecurity(Model.Definition.ApiKey))))
+        {
+        @:@(Include(new SimpleAuthMethodTemplate(), method))
+        @EmptyLine
+        @:
+        }
+
+        @foreach (MethodGroupCs operation in Model.Operations)
+        {
+        @:@(Include(new SimpleAuthApiGroupedCallsTemplate(), new Tuple<ApiModel,MethodGroupCs>(Model,operation)))
+        @EmptyLine
+        }
+
+		}
+    }
+}

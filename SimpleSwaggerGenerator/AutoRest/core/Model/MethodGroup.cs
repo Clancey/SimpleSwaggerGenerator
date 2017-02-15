@@ -214,7 +214,10 @@ namespace AutoRest.Core.Model
             }
         }
 
-		[JsonIgnore]
+        public Method[] GetMethods(string apiTypes) => Methods.Where(x => x.HasSecurity(apiTypes)).ToArray();
+        public Method[] GetMethods(SecurityDefinition definition) => Methods.Where(x => x.HasSecurity(definition.ApiKey) || (!string.IsNullOrWhiteSpace(definition.ApiKeyName) && x.HasSecurity(definition.ApiKeyName))).ToArray();
+		
+        [JsonIgnore]
 		public virtual string[] SecurityDefinitionNames => Methods.SelectMany(x => x.Security ?? new[] { "" }).Distinct().ToArray();
 
         [JsonIgnore]

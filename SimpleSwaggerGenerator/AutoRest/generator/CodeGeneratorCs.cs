@@ -76,19 +76,35 @@ namespace AutoRest.CSharp
 				apis.Add(new SecurityDefinition());
 			}
 
+			
+			var groups = codeModel.Operations.SelectMany(method => method.SecurityDefinitionNames.Select(x => new Tuple<string, MethodGroup>(x, method))).GroupBy(x => x.Item1).ToDictionary(x => x.Key, x => x.Select(y=> y.Item2).ToArray());
+
+			var apiModels = apis.Select(x => new ApiModel { CodeModel = codeModel,
+				Definition = x, 
+				Operations = groups[x.ApiKey].Union(string.IsNullOrWhiteSpace(x.ApiKeyName) ? new MethodGroup[0] : groups[x.ApiKeyName]).ToArray() 
+			}).ToList();
+
+			foreach (var apiModel in apiModels)
+			{
+				var simpleAuthApiTemplate = new SimpleAuthApiTemplate { Model = apiModel };
+				if (isInMemory)
+					GenerateTemplateCode(simpleAuthApiTemplate, sb);
+				else
+					await Write(simpleAuthApiTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
+
+			}
+
+			var outPut = sb.ToString();
             // Service client
             var serviceClientTemplate = new ServiceClientTemplate { Model = codeModel };
 			if (isInMemory)
 				GenerateTemplateCode(serviceClientTemplate, sb);
 			else
-            	await Write(serviceClientTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
-			
-			var groups = codeModel.Operations.SelectMany(method => method.SecurityDefinitionNames.Select(x => new Tuple<string, MethodGroup>(x, method))).GroupBy(x => x.Item1).ToDictionary(x => x.Key, x => x.Select(y=> y.Item2).ToArray());
+				await Write(serviceClientTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
             // operations
             foreach (MethodGroupCs methodGroup in codeModel.Operations)
             {
-                if (!methodGroup.Name.IsNullOrEmpty())
-                {
+                if (!methodGroup.Name.IsNullOrEmpty())                {
                     // Operation
                     var operationsTemplate = new MethodGroupTemplate { Model = methodGroup };
 					if (isInMemory)

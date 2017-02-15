@@ -77,10 +77,10 @@ namespace AutoRest.CSharp.Model
                     format, parameter.ModelTypeName, parameter.Name, defaultValue));
             }
 
-            if (addCustomHeaderParameters)
-            {
-                declarations.Add("System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null");
-            }
+            //if (addCustomHeaderParameters)
+            //{
+            //    declarations.Add("System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null");
+            //}
 
             return string.Join(", ", declarations);
         }
@@ -93,12 +93,6 @@ namespace AutoRest.CSharp.Model
         public virtual string GetAsyncMethodParameterDeclaration(bool addCustomHeaderParameters)
         {
             var declarations = this.GetSyncMethodParameterDeclaration(addCustomHeaderParameters);
-
-            if (!string.IsNullOrEmpty(declarations))
-            {
-                declarations += ", ";
-            }
-            declarations += "System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)";
 
             return declarations;
         }
@@ -141,18 +135,18 @@ namespace AutoRest.CSharp.Model
             {
                 if (ReturnType.Body != null && ReturnType.Headers != null)
                 {
-                    return $"Microsoft.Rest.HttpOperationResponse<{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)},{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)},{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
                 }
                 if (ReturnType.Body != null)
                 {
-                    return $"Microsoft.Rest.HttpOperationResponse<{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)}>";
                 }
                 if (ReturnType.Headers != null)
                 {
-                    return $"Microsoft.Rest.HttpOperationHeaderResponse<{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
                 }
 
-                return "Microsoft.Rest.HttpOperationResponse";
+                return "strin";
 
             }
         }
@@ -203,7 +197,7 @@ namespace AutoRest.CSharp.Model
                 }
                 else
                 {
-                    return "Microsoft.Rest.HttpOperationException";
+                    return "System.Exception";
                 }
             }
         }

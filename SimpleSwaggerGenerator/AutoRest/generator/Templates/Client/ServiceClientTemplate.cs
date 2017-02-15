@@ -78,7 +78,7 @@ WriteLiteral("\nnamespace ");
 
 #line default
 #line hidden
-WriteLiteral("\n{\n    using Microsoft.Rest;\n");
+WriteLiteral("\n{\n    using SimpleAuth;\n");
 
 
 #line 13 "ServiceClientTemplate.cshtml"

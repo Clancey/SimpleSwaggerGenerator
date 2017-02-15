@@ -24,6 +24,8 @@ namespace AutoRest.Core.Model
 
         public string Name { get; set; }
 
+		public string ApiKey { get; set; }
+
 		public string ApiKeyName { get; set; }
 
         public ApiKeyLocation In { get; set; }

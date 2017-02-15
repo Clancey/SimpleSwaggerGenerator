@@ -1,0 +1,22 @@
+﻿@__class AutoRest.CSharp.Templates.Rest.Client.SimpleAuthApiGroupedCallsTemplate
+@using AutoRest.CSharp.Model
+@using AutoRest.CSharp.Templates
+@using AutoRest.CSharp.Templates.Rest.Client
+@inherits AutoRest.Core.Template<Tuple<ApiModel,AutoRest.CSharp.Model.MethodGroupCs>>
+
+public class @(Model.Item2.TypeName)Class
+{
+    @Model.Item1.Name api;
+    public @(Model.Item2.TypeName)Class(@Model.Item1.Name api)
+    {
+        this.api = api;
+    }
+
+    @foreach (MethodCs method in Model.Item2.GetMethods(Model.Item1.Definition)) 
+    {
+    @:@(Include(new SimpleAuthMethodTemplate(), method))
+    @EmptyLine
+    @:
+    }
+
+}
