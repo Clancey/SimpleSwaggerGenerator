@@ -146,7 +146,7 @@ namespace AutoRest.CSharp.Model
                     return $"{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
                 }
 
-                return "strin";
+                return "string";
 
             }
         }
