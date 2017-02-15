@@ -161,16 +161,16 @@ namespace AutoRest.CSharp.Model
                 if (ReturnType.Body != null)
                 {
                     return string.Format(CultureInfo.InvariantCulture,
-                        "System.Threading.Tasks.Task<{0}>", ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head));
+                        "Task<{0}>", ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head));
                 }
                 else if (ReturnType.Headers != null)
                 {
                     return string.Format(CultureInfo.InvariantCulture,
-                        "System.Threading.Tasks.Task<{0}>", ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head));
+                        "Task<{0}>", ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head));
                 }
                 else
                 {
-                    return "System.Threading.Tasks.Task";
+                    return "Task";
                 }
             }
         }

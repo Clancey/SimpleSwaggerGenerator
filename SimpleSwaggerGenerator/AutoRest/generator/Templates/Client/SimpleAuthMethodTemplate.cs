@@ -197,11 +197,11 @@ WriteLiteral("[System.Obsolete()]\n");
 
 #line default
 #line hidden
-WriteLiteral("public async System.Threading.Tasks.Task<");
+WriteLiteral("public async Task<");
 
 
 #line 36 "SimpleAuthMethodTemplate.cshtml"
-                                     Write(Model.OperationResponseReturnTypeString);
+              Write(Model.OperationResponseReturnTypeString);
 
 
 #line default
@@ -210,7 +210,7 @@ WriteLiteral("> ");
 
 
 #line 36 "SimpleAuthMethodTemplate.cshtml"
-                                                                                 Write(Model.Name);
+                                                          Write(Model.Name);
 
 
 #line default
@@ -219,7 +219,7 @@ WriteLiteral("(");
 
 
 #line 36 "SimpleAuthMethodTemplate.cshtml"
-                                                                                               Write(Model.GetAsyncMethodParameterDeclaration(true));
+                                                                        Write(Model.GetAsyncMethodParameterDeclaration(true));
 
 
 #line default
