@@ -1,39 +1,63 @@
 ﻿@__class AutoRest.CSharp.Templates.Rest.Client.SimpleAuthMethodTemplate
+@using System.Globalization
+@using System.Linq;
 @using System
-@using System.Linq
+@using AutoRest.Core.Model
 @using AutoRest.Core.Utilities
+@using AutoRest.CSharp
 @using AutoRest.CSharp.Model
-@using AutoRest.CSharp.Templates
-@inherits AutoRest.Core.Template<AutoRest.CSharp.Model.MethodCs>
+@using AutoRest.Extensions
+@using System.Xml;
+@inherits AutoRest.Core.Template<Tuple<AutoRest.CSharp.Model.MethodCs,bool>>
 
-@if (!string.IsNullOrWhiteSpace(Model.Description) || !string.IsNullOrEmpty(Model.Summary))
+@if (!string.IsNullOrWhiteSpace(Model.Item1.Description) || !string.IsNullOrEmpty(Model.Item1.Summary))
 {
 @:/// <summary>
-@:@WrapComment("/// ", String.IsNullOrEmpty(Model.Summary) ? Model.Description.EscapeXmlComment() : Model.Summary.EscapeXmlComment())
-    if (!string.IsNullOrEmpty(Model.ExternalDocsUrl))
+@:@WrapComment("/// ", String.IsNullOrEmpty(Model.Item1.Summary) ? Model.Item1.Description.EscapeXmlComment() : Model.Item1.Summary.EscapeXmlComment())
+    if (!string.IsNullOrEmpty(Model.Item1.ExternalDocsUrl))
     {
-@:/// <see href="@Model.ExternalDocsUrl" />
+@:/// <see href="@Model.Item1.ExternalDocsUrl" />
     }
 @:/// </summary>
 }
-@if (!String.IsNullOrEmpty(Model.Description) && !String.IsNullOrEmpty(Model.Summary))
+@if (!String.IsNullOrEmpty(Model.Item1.Description) && !String.IsNullOrEmpty(Model.Item1.Summary))
 {
 @:/// <remarks>
-@:@WrapComment("/// ", Model.Description.EscapeXmlComment())
+@:@WrapComment("/// ", Model.Item1.Description.EscapeXmlComment())
 @:/// </remarks>
 }
-@foreach (var parameter in Model.LocalParameters)
+@foreach (var parameter in Model.Item1.LocalParameters)
 {
 @:/// <param name='@parameter.Name'>
 @WrapComment("/// ", parameter.Documentation.EscapeXmlComment())@:
 @:/// </param>
 }
 
-@if (Model.Deprecated)
+@if (Model.Item1.Deprecated)
 {
 @:[System.Obsolete()]
 }
-public async Task<@(Model.OperationResponseReturnTypeString)> @(Model.Name)(@(Model.GetAsyncMethodParameterDeclaration(true)))
+public @(Model.Item1.TaskExtensionReturnTypeString) @(Model.Item1.Name)(@(Model.Item1.GetAsyncMethodParameterDeclaration(true)))
 {
+ @foreach (ParameterCs parameter in Model.Item1.Parameters.Where(p => !p.IsConstant))
+    {
+        if (parameter.IsRequired && parameter.IsNullable())
+        {
+    @:if (@(parameter.Name) == null)
+    @:{
+        @:throw new System.Exception("Parameter '@(parameter.Name)' cannot be null");
+    @:}
+@:
+        }
+        if(parameter.CanBeValidated  && (Model.Item1.HttpMethod != HttpMethod.Patch || parameter.Location != ParameterLocation.Body))
+        {
+    @:@(parameter.ModelType.ValidateType(Model.Item1, parameter.Name, parameter.Constraints))
+        }
+    }
+
+    var path = "@(Model.Item1.Url)";
+
+    @Model.Item1.BuildBody(@Model.Item2)
+
 
 }

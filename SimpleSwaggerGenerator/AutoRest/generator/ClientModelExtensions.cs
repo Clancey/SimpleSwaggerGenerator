@@ -237,9 +237,7 @@ namespace AutoRest.CSharp
                 case CollectionFormat.Tsv:
                     return "\t";
                 default:
-                    throw new NotSupportedException(
-                        string.Format(CultureInfo.InvariantCulture, 
-                        "Collection format {0} is not supported.", format));
+                return ",";
             }
         }
 

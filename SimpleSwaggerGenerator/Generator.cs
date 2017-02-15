@@ -11,7 +11,6 @@ namespace SimpleSwaggerGenerator
 		public string NameSpace { get; set; }
 		public bool OutputToMemory { get; set; }
 		public string OutputFile { get; set; }
-		public bool AutoNameFile { get; set; } = true;
 		public bool SeperateClassesIntoFiles { get; set; } = false;
 
 		public string Generate()
@@ -25,6 +24,7 @@ namespace SimpleSwaggerGenerator
 				Settings.Instance.SwaggerUrl = SwaggerUrl;
 				Settings.Instance.OutputFileName = OutputFile;
 				Settings.Instance.OutputInMemory = OutputToMemory;
+                Settings.Instance.SeperateClassesIntoFiles = SeperateClassesIntoFiles;
 				return AutoRestController.Generate();
 			}
 		}

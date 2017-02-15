@@ -234,11 +234,11 @@ WriteLiteral("public virtual ");
 
 #line default
 #line hidden
-WriteLiteral(" ");
+WriteLiteral("Class ");
 
 
 #line 38 "SimpleAuthApiTemplate.cshtml"
-                                           Write(operation.NameForProperty);
+                                                Write(operation.NameForProperty);
 
 
 #line default
@@ -303,7 +303,7 @@ WriteLiteral(" = new ");
 
 #line default
 #line hidden
-WriteLiteral("(this);\n");
+WriteLiteral("Class(this);\n");
 
 
 #line 50 "SimpleAuthApiTemplate.cshtml"
@@ -312,16 +312,16 @@ WriteLiteral("(this);\n");
 
 #line default
 #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\n");
 
 
-#line 53 "SimpleAuthApiTemplate.cshtml"
+#line 52 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 53 "SimpleAuthApiTemplate.cshtml"
+#line 52 "SimpleAuthApiTemplate.cshtml"
          if (Model.CodeModel.IsCustomBaseUri)
         {
 
@@ -330,11 +330,11 @@ WriteLiteral("\n\n");
 #line hidden
 WriteLiteral("            ");
 
-WriteLiteral("this.BaseUri = \"");
+WriteLiteral("this.BaseAddress = \"");
 
 
-#line 55 "SimpleAuthApiTemplate.cshtml"
-                         Write(Model.CodeModel.BaseUrl);
+#line 54 "SimpleAuthApiTemplate.cshtml"
+                             Write(Model.CodeModel.BaseUrl);
 
 
 #line default
@@ -342,7 +342,7 @@ WriteLiteral("this.BaseUri = \"");
 WriteLiteral("\";\n");
 
 
-#line 56 "SimpleAuthApiTemplate.cshtml"
+#line 55 "SimpleAuthApiTemplate.cshtml"
         }
         else
         {
@@ -352,11 +352,11 @@ WriteLiteral("\";\n");
 #line hidden
 WriteLiteral("            ");
 
-WriteLiteral("this.BaseUri = new System.Uri(\"");
+WriteLiteral("this.BaseAddress = new System.Uri(\"");
 
 
-#line 59 "SimpleAuthApiTemplate.cshtml"
-                                        Write(Model.CodeModel.BaseUrl);
+#line 58 "SimpleAuthApiTemplate.cshtml"
+                                            Write(Model.CodeModel.BaseUrl);
 
 
 #line default
@@ -364,13 +364,24 @@ WriteLiteral("this.BaseUri = new System.Uri(\"");
 WriteLiteral("\");\n");
 
 
-#line 60 "SimpleAuthApiTemplate.cshtml"
+#line 59 "SimpleAuthApiTemplate.cshtml"
         }
 
 
 #line default
 #line hidden
-WriteLiteral("\n            CustomInitialize();\n        }\n\n");
+WriteLiteral("\n            CustomInitialize();\n        }\n");
+
+WriteLiteral("        ");
+
+
+#line 63 "SimpleAuthApiTemplate.cshtml"
+   Write(EmptyLine);
+
+
+#line default
+#line hidden
+WriteLiteral("\n\n");
 
 
 #line 65 "SimpleAuthApiTemplate.cshtml"
@@ -390,7 +401,7 @@ WriteLiteral("        ");
 
 
 #line 67 "SimpleAuthApiTemplate.cshtml"
-      Write(Include(new SimpleAuthMethodTemplate(), method));
+      Write(Include(new SimpleAuthMethodTemplate(), new Tuple<MethodCs,bool>(method,false)));
 
 
 #line default
@@ -476,7 +487,7 @@ WriteLiteral("\n");
 
 #line default
 #line hidden
-WriteLiteral("\n\t\t}\n    }\n}");
+WriteLiteral("\n    }\n}");
 
 }
 }

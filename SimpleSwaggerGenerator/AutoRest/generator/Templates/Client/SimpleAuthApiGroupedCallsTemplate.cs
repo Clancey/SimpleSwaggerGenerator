@@ -101,7 +101,7 @@ WriteLiteral("    ");
 
 
 #line 17 "SimpleAuthApiGroupedCallsTemplate.cshtml"
-  Write(Include(new SimpleAuthMethodTemplate(), method));
+  Write(Include(new SimpleAuthMethodTemplate(), new Tuple<MethodCs,bool>(method,true)));
 
 
 #line default

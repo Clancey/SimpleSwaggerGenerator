@@ -36,6 +36,8 @@ namespace AutoRest.Core
         /// </summary>
         public static string Generate()
         {
+            var plugin = new CSharp.PluginCs();
+            CodeNamer.Instance = new CSharp.CodeNamerCs();
             if (Settings.Instance == null)
             {
                 throw new ArgumentNullException("settings");
@@ -68,7 +70,6 @@ namespace AutoRest.Core
                 throw ErrorManager.CreateError(Resources.ErrorGeneratingClientModel, exception);
             }
 
-			var plugin = new CSharp.PluginCs();
 
             Console.ResetColor();
             Console.WriteLine(plugin.CodeGenerator.UsageInstructions);

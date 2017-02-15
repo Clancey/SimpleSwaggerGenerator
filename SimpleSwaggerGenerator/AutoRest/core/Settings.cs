@@ -142,7 +142,9 @@ Licensed under the MIT License. See License.txt in the project root for license 
 		[SettingsAlias("output")]
 		public string OutputDirectory { get; set; }
 
-		public bool OutputInMemory { get; set; }
+        public bool OutputInMemory { get; set; }
+
+        public bool SeperateClassesIntoFiles { get; set; }
 
 		/// <summary>
 		/// Gets or sets the code generation language.

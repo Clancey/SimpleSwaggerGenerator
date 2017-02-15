@@ -20,11 +20,13 @@ namespace AutoRest.CSharp.Model
         public CompositeTypeCs()
         {
             _constructorModel = new ConstructorModel(this);
+            //Name.OnGet+= GetCleanName;
         }
 
         public CompositeTypeCs(string name ) : base(name)
         {
             _constructorModel = new ConstructorModel(this);
+            //Name.OnGet += GetCleanName;
         }
 
         [JsonIgnore]

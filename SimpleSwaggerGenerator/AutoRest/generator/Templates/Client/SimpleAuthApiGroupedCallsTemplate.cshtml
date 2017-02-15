@@ -14,7 +14,7 @@ public class @(Model.Item2.TypeName)Class
 
     @foreach (MethodCs method in Model.Item2.GetMethods(Model.Item1.Definition)) 
     {
-    @:@(Include(new SimpleAuthMethodTemplate(), method))
+    @:@(Include(new SimpleAuthMethodTemplate(), new Tuple<MethodCs,bool>(method,true)))
     @EmptyLine
     @:
     }

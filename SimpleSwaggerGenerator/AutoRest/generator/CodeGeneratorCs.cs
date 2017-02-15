@@ -57,6 +57,10 @@ namespace AutoRest.CSharp
 
 			var isInMemory = Settings.Instance.OutputInMemory;
 
+            if (!Settings.Instance.SeperateClassesIntoFiles && string.IsNullOrWhiteSpace(Settings.Instance.OutputFileName))
+            {
+                Settings.Instance.OutputFileName = $"{codeModel.Name}{ImplementationFileExtension}";
+            }
 
 			//TODO: Move this down to the modeler
 			var apis = codeModel.SecurityDefinitions?.ToList();
@@ -90,37 +94,10 @@ namespace AutoRest.CSharp
 				if (isInMemory)
 					GenerateTemplateCode(simpleAuthApiTemplate, sb);
 				else
-					await Write(simpleAuthApiTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
+					await Write(simpleAuthApiTemplate, $"{apiModel.Name}{ImplementationFileExtension}");
 
-			}
-
-			var outPut = sb.ToString();
-            // Service client
-            var serviceClientTemplate = new ServiceClientTemplate { Model = codeModel };
-			if (isInMemory)
-				GenerateTemplateCode(serviceClientTemplate, sb);
-			else
-				await Write(serviceClientTemplate, $"{codeModel.Name}{ImplementationFileExtension}");
-            // operations
-            foreach (MethodGroupCs methodGroup in codeModel.Operations)
-            {
-                if (!methodGroup.Name.IsNullOrEmpty())                {
-                    // Operation
-                    var operationsTemplate = new MethodGroupTemplate { Model = methodGroup };
-					if (isInMemory)
-						GenerateTemplateCode(operationsTemplate, sb);
-					else
-                    	await Write(operationsTemplate, $"{operationsTemplate.Model.TypeName}{ImplementationFileExtension}");
-
-                }
-
-                var operationExtensionsTemplate = new ExtensionsTemplate { Model = methodGroup };
-				if (isInMemory)
-					GenerateTemplateCode(operationExtensionsTemplate, sb);
-				else
-                	await Write(operationExtensionsTemplate, $"{methodGroup.ExtensionTypeName}Extensions{ImplementationFileExtension}");
             }
-
+           
             // Models
             foreach (CompositeTypeCs model in codeModel.ModelTypes.Union(codeModel.HeaderTypes))
             {
@@ -147,15 +124,15 @@ namespace AutoRest.CSharp
                 	await Write(enumTemplate, Path.Combine(Settings.Instance.ModelsName, $"{enumTemplate.Model.Name}{ImplementationFileExtension}"));
             }
 
-            // Exceptions
-            foreach (CompositeTypeCs exceptionType in codeModel.ErrorTypes)
-            {
-                var exceptionTemplate = new ExceptionTemplate { Model = exceptionType, };
-				if (isInMemory)
-					GenerateTemplateCode(exceptionTemplate, sb);
-				else
-                	await Write(exceptionTemplate, Path.Combine(Settings.Instance.ModelsName, $"{exceptionTemplate.Model.ExceptionTypeDefinitionName}{ImplementationFileExtension}"));
-            }
+    //        // Exceptions
+    //        foreach (CompositeTypeCs exceptionType in codeModel.ErrorTypes)
+    //        {
+    //            var exceptionTemplate = new ExceptionTemplate { Model = exceptionType, };
+				//if (isInMemory)
+				//	GenerateTemplateCode(exceptionTemplate, sb);
+				//else
+    //            	await Write(exceptionTemplate, Path.Combine(Settings.Instance.ModelsName, $"{exceptionTemplate.Model.ExceptionTypeDefinitionName}{ImplementationFileExtension}"));
+    //        }
 
 			//// Xml Serialization
 			//if (codeModel.ShouldGenerateXmlSerialization)

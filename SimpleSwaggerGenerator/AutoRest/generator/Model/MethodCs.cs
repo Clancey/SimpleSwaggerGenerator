@@ -135,18 +135,18 @@ namespace AutoRest.CSharp.Model
             {
                 if (ReturnType.Body != null && ReturnType.Headers != null)
                 {
-                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)},{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)},{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}";
                 }
                 if (ReturnType.Body != null)
                 {
-                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Body.AsNullableType(HttpMethod != HttpMethod.Head)}";
                 }
                 if (ReturnType.Headers != null)
                 {
-                    return $"{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}>";
+                    return $"{ReturnType.Headers.AsNullableType(HttpMethod != HttpMethod.Head)}";
                 }
 
-                return "string";
+                return "";
 
             }
         }
@@ -340,6 +340,115 @@ namespace AutoRest.CSharp.Model
         {
             return ((int)code).ToString(CultureInfo.InvariantCulture);
         }
+
+
+        public virtual string BuildBody(bool isNested)
+        {
+            var builder = new IndentedStringBuilder();
+            var queryParameters = this.LogicalParameters.Where(p => p.Location == ParameterLocation.Query || p.Location == ParameterLocation.Path).ToList();
+            if (queryParameters.Any())
+            {
+                BuildParameterDictionary(queryParameters, "queryParameters", builder);
+
+            }
+
+            var headerParameters = this.LogicalParameters.Where(p => p.Location == ParameterLocation.Header).ToList();
+            if (headerParameters.Any())
+            {
+                BuildParameterDictionary(headerParameters, "headers", builder);
+            }
+
+
+            var formsDataParameters = this.LogicalParameters.Where(p => p.Location == ParameterLocation.FormData).ToList();
+            if (formsDataParameters.Any())
+            {
+                BuildParameterDictionary(formsDataParameters, "formsParameters", builder);
+                builder.AppendLine("var formsContent = new FormUrlEncodedContent(formsParameters);");
+                builder.AppendLine();
+            }
+
+            var methodParams = new List<string>();
+            if (RequestBody != null)
+            {
+                if (RequestBody.ModelType.IsPrimaryType(KnownPrimaryType.Stream))
+                {
+                    methodParams.Add($"new System.Net.Http.StreamContent({RequestBody.Name})");
+                }
+                else
+                {
+                    methodParams.Add(RequestBody.Name);
+                }
+            }
+            else if (formsDataParameters.Any())
+            {
+                methodParams.Add("formsContent");
+            }
+            else if (this.HttpMethod == HttpMethod.Post)
+            {
+                methodParams.Add("body: null");
+            }
+
+            methodParams.Add("path: path");
+
+            if (queryParameters.Any())
+                methodParams.Add("queryParameters: queryParameters");
+            if(headerParameters.Any())
+                methodParams.Add("headers: headers");
+            
+            methodParams.Add($"authenticated: {Security.Any().ToString().ToLower()}");
+
+            var returnMethod = ReturnTypeString == "void" ? HttpMethod.ToString()
+                                          : $"{HttpMethod}<{OperationResponseReturnTypeString}>";
+            if (isNested)
+                returnMethod = "api." + returnMethod;
+            var joinedMethodParams = string.Join(", ", methodParams);
+            builder.AppendLine($"return {returnMethod} ( {joinedMethodParams} );");
+            return builder.ToString();
+
+        }
+
+        void BuildParameterDictionary(IEnumerable<Parameter> parameters, string variableName, IndentedStringBuilder builder)
+        {
+            builder.AppendLine($"var {variableName} = new Dictionary<string,string>();");
+            foreach (var parameter in parameters)
+            {
+                if ((parameter as ParameterCs).IsNullable())
+                {
+                    builder.AppendLine("if ({0} != null)", parameter.Name)
+                        .AppendLine("{").Indent();
+                }
+
+                var replaceString = "{0}.Add(\"{1}\", string.Format(\"{{0}}\", {2}));";
+
+                if (parameter.CollectionFormat == CollectionFormat.Multi)
+                {
+                    builder.AppendLine("if ({0}.Count == 0)", parameter.Name)
+                       .AppendLine("{").Indent()
+                       .AppendLine(replaceString,variableName, parameter.SerializedName, "string.Empty").Outdent()
+                       .AppendLine("}")
+                       .AppendLine("else")
+                       .AppendLine("{").Indent()
+                       .AppendLine("foreach (var _item in {0})", parameter.Name)
+                       .AppendLine("{").Indent()
+                       .AppendLine(replaceString,variableName, parameter.SerializedName, "_item ?? string.Empty").Outdent()
+                       .AppendLine("}").Outdent()
+                       .AppendLine("}").Outdent();
+                }
+                else
+                {
+                    builder.AppendLine(replaceString,
+                           variableName, parameter.SerializedName, parameter.GetFormattedReferenceValue(ClientReference));
+                }
+
+                if ((parameter as ParameterCs).IsNullable())
+                {
+                    builder.Outdent()
+                        .AppendLine("}");
+                }
+            }
+            builder.AppendLine();
+        }
+
 
         /// <summary>
         /// Generate code to build the URL from a url expression and method parameters
