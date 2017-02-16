@@ -252,18 +252,6 @@
     <Compile Include="AutoRest\generator\Templates\Common\ModelTemplate.cs">
       <DependentUpon>ModelTemplate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cs">
-      <DependentUpon>MethodGroupTemplate.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\MethodTemplate.cs">
-      <DependentUpon>MethodTemplate.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cs">
-      <DependentUpon>ServiceClientBodyTemplate.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cs">
-      <DependentUpon>ServiceClientTemplate.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="AutoRest\extensions\Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
@@ -348,22 +336,6 @@
     <None Include="AutoRest\generator\Templates\Common\ModelTemplate.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>
       <LastGenOutput>ModelTemplate.cs</LastGenOutput>
-    </None>
-    <None Include="AutoRest\generator\Templates\Client\MethodGroupTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>MethodGroupTemplate.cs</LastGenOutput>
-    </None>
-    <None Include="AutoRest\generator\Templates\Client\MethodTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>MethodTemplate.cs</LastGenOutput>
-    </None>
-    <None Include="AutoRest\generator\Templates\Client\ServiceClientBodyTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>ServiceClientBodyTemplate.cs</LastGenOutput>
-    </None>
-    <None Include="AutoRest\generator\Templates\Client\ServiceClientTemplate.cshtml">
-      <Generator>RazorTemplatePreprocessor</Generator>
-      <LastGenOutput>ServiceClientTemplate.cs</LastGenOutput>
     </None>
     <None Include="AutoRest\generator\Templates\Client\SimpleAuthApiTemplate.cshtml">
       <Generator>RazorTemplatePreprocessor</Generator>

@@ -191,12 +191,7 @@ namespace @(Settings.Namespace).@(Settings.ModelsName)
         }
 @if(@Model.ShouldValidateChain())
 {
-        @:/// <summary>
-        @:/// Validate the object.
-        @:/// </summary>
-        @:/// <exception cref="Microsoft.Rest.ValidationException">
-        @:/// Thrown if validation fails
-        @:/// </exception>
+
         @:public @Model.MethodQualifier void Validate()
         @:{
             bool anythingToValidate = false;
@@ -212,7 +207,7 @@ namespace @(Settings.Namespace).@(Settings.ModelsName)
                 anythingToValidate = true;
             @:if (@property.Name == null)
             @:{
-                @:throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "@property.Name");
+                @:throw new System.Exception("Property '@property.Name' is required/");
             @:}
             @:
             }

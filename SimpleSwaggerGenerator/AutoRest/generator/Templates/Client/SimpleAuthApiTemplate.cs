@@ -84,10 +84,10 @@ WriteLiteral("\nnamespace ");
 
 #line default
 #line hidden
-WriteLiteral("\n{\n    using SimpleAuth;\n");
+WriteLiteral("\n{\n    using SimpleAuth;\n    using System.Net.Http;\n");
 
 
-#line 14 "SimpleAuthApiTemplate.cshtml"
+#line 15 "SimpleAuthApiTemplate.cshtml"
  foreach (var usingString in Model.CodeModel.Usings) {
 
 
@@ -98,7 +98,7 @@ WriteLiteral("    ");
 WriteLiteral("using ");
 
 
-#line 15 "SimpleAuthApiTemplate.cshtml"
+#line 16 "SimpleAuthApiTemplate.cshtml"
        Write(usingString);
 
 
@@ -107,7 +107,7 @@ WriteLiteral("using ");
 WriteLiteral(";\n");
 
 
-#line 16 "SimpleAuthApiTemplate.cshtml"
+#line 17 "SimpleAuthApiTemplate.cshtml"
 }
 
 
@@ -118,7 +118,7 @@ WriteLiteral("\n");
 WriteLiteral("    ");
 
 
-#line 18 "SimpleAuthApiTemplate.cshtml"
+#line 19 "SimpleAuthApiTemplate.cshtml"
 Write(EmptyLine);
 
 
@@ -127,13 +127,13 @@ Write(EmptyLine);
 WriteLiteral("\n");
 
 
-#line 19 "SimpleAuthApiTemplate.cshtml"
+#line 20 "SimpleAuthApiTemplate.cshtml"
     
 
 #line default
 #line hidden
 
-#line 19 "SimpleAuthApiTemplate.cshtml"
+#line 20 "SimpleAuthApiTemplate.cshtml"
      if (!string.IsNullOrWhiteSpace(Model.CodeModel.Documentation))
     {
 
@@ -147,7 +147,7 @@ WriteLiteral("/// <summary>\n");
 WriteLiteral("    ");
 
 
-#line 22 "SimpleAuthApiTemplate.cshtml"
+#line 23 "SimpleAuthApiTemplate.cshtml"
  Write(WrapComment("/// ", Model.CodeModel.Documentation.EscapeXmlComment()));
 
 
@@ -160,7 +160,7 @@ WriteLiteral("    ");
 WriteLiteral("/// </summary>\n");
 
 
-#line 24 "SimpleAuthApiTemplate.cshtml"
+#line 25 "SimpleAuthApiTemplate.cshtml"
     }
 
 
@@ -169,7 +169,7 @@ WriteLiteral("/// </summary>\n");
 WriteLiteral("\n    public partial class ");
 
 
-#line 26 "SimpleAuthApiTemplate.cshtml"
+#line 27 "SimpleAuthApiTemplate.cshtml"
                     Write(Model.Name);
 
 
@@ -178,24 +178,34 @@ WriteLiteral("\n    public partial class ");
 WriteLiteral(" : ");
 
 
-#line 26 "SimpleAuthApiTemplate.cshtml"
+#line 27 "SimpleAuthApiTemplate.cshtml"
                                   Write(Model.ApiSubclass);
 
 
 #line default
 #line hidden
-WriteLiteral("\n    {\n    \t/// <summary>\n        /// An optional partial-method to perform custo" +
-"m initialization.\n        ///</summary>\n        partial void CustomInitialize();" +
-"\n\n");
+WriteLiteral("\n    {\n\n\n");
+
+WriteLiteral("        ");
 
 
-#line 33 "SimpleAuthApiTemplate.cshtml"
+#line 31 "SimpleAuthApiTemplate.cshtml"
+   Write(Model.BuildConstructor());
+
+
+#line default
+#line hidden
+WriteLiteral("\n    \t/// <summary>\n        /// An optional partial-method to perform custom init" +
+"ialization.\n        ///</summary>\n        partial void CustomInitialize();\n\n");
+
+
+#line 37 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 33 "SimpleAuthApiTemplate.cshtml"
+#line 37 "SimpleAuthApiTemplate.cshtml"
          foreach (var operation in Model.Operations)
         {
 
@@ -211,7 +221,7 @@ WriteLiteral("        ");
 WriteLiteral("/// Gets the ");
 
 
-#line 36 "SimpleAuthApiTemplate.cshtml"
+#line 40 "SimpleAuthApiTemplate.cshtml"
                    Write(operation.TypeName);
 
 
@@ -228,7 +238,7 @@ WriteLiteral("        ");
 WriteLiteral("public virtual ");
 
 
-#line 38 "SimpleAuthApiTemplate.cshtml"
+#line 42 "SimpleAuthApiTemplate.cshtml"
                      Write(operation.TypeName);
 
 
@@ -237,7 +247,7 @@ WriteLiteral("public virtual ");
 WriteLiteral("Class ");
 
 
-#line 38 "SimpleAuthApiTemplate.cshtml"
+#line 42 "SimpleAuthApiTemplate.cshtml"
                                                 Write(operation.NameForProperty);
 
 
@@ -246,20 +256,20 @@ WriteLiteral("Class ");
 WriteLiteral(" { get; private set; }\n");
 
 
-#line 39 "SimpleAuthApiTemplate.cshtml"
+#line 43 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 39 "SimpleAuthApiTemplate.cshtml"
+#line 43 "SimpleAuthApiTemplate.cshtml"
    Write(EmptyLine);
 
 
 #line default
 #line hidden
 
-#line 39 "SimpleAuthApiTemplate.cshtml"
+#line 43 "SimpleAuthApiTemplate.cshtml"
                   
         }
 
@@ -270,13 +280,13 @@ WriteLiteral("\n        /// <summary>\n        /// Initializes client properties
 "ummary>\n        private void Initialize()\n        {\n");
 
 
-#line 47 "SimpleAuthApiTemplate.cshtml"
+#line 51 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 47 "SimpleAuthApiTemplate.cshtml"
+#line 51 "SimpleAuthApiTemplate.cshtml"
          foreach (var operation in Model.Operations)
         {
 
@@ -288,7 +298,7 @@ WriteLiteral("            ");
 WriteLiteral("this.");
 
 
-#line 49 "SimpleAuthApiTemplate.cshtml"
+#line 53 "SimpleAuthApiTemplate.cshtml"
                Write(operation.NameForProperty);
 
 
@@ -297,7 +307,7 @@ WriteLiteral("this.");
 WriteLiteral(" = new ");
 
 
-#line 49 "SimpleAuthApiTemplate.cshtml"
+#line 53 "SimpleAuthApiTemplate.cshtml"
                                                   Write(operation.TypeName);
 
 
@@ -306,7 +316,7 @@ WriteLiteral(" = new ");
 WriteLiteral("Class(this);\n");
 
 
-#line 50 "SimpleAuthApiTemplate.cshtml"
+#line 54 "SimpleAuthApiTemplate.cshtml"
         }
 
 
@@ -315,13 +325,13 @@ WriteLiteral("Class(this);\n");
 WriteLiteral("\n");
 
 
-#line 52 "SimpleAuthApiTemplate.cshtml"
+#line 56 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 52 "SimpleAuthApiTemplate.cshtml"
+#line 56 "SimpleAuthApiTemplate.cshtml"
          if (Model.CodeModel.IsCustomBaseUri)
         {
 
@@ -333,7 +343,7 @@ WriteLiteral("            ");
 WriteLiteral("this.BaseAddress = \"");
 
 
-#line 54 "SimpleAuthApiTemplate.cshtml"
+#line 58 "SimpleAuthApiTemplate.cshtml"
                              Write(Model.CodeModel.BaseUrl);
 
 
@@ -342,7 +352,7 @@ WriteLiteral("this.BaseAddress = \"");
 WriteLiteral("\";\n");
 
 
-#line 55 "SimpleAuthApiTemplate.cshtml"
+#line 59 "SimpleAuthApiTemplate.cshtml"
         }
         else
         {
@@ -355,7 +365,7 @@ WriteLiteral("            ");
 WriteLiteral("this.BaseAddress = new System.Uri(\"");
 
 
-#line 58 "SimpleAuthApiTemplate.cshtml"
+#line 62 "SimpleAuthApiTemplate.cshtml"
                                             Write(Model.CodeModel.BaseUrl);
 
 
@@ -364,7 +374,7 @@ WriteLiteral("this.BaseAddress = new System.Uri(\"");
 WriteLiteral("\");\n");
 
 
-#line 59 "SimpleAuthApiTemplate.cshtml"
+#line 63 "SimpleAuthApiTemplate.cshtml"
         }
 
 
@@ -375,7 +385,7 @@ WriteLiteral("\n            CustomInitialize();\n        }\n");
 WriteLiteral("        ");
 
 
-#line 63 "SimpleAuthApiTemplate.cshtml"
+#line 67 "SimpleAuthApiTemplate.cshtml"
    Write(EmptyLine);
 
 
@@ -384,13 +394,13 @@ WriteLiteral("        ");
 WriteLiteral("\n\n");
 
 
-#line 65 "SimpleAuthApiTemplate.cshtml"
+#line 69 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 65 "SimpleAuthApiTemplate.cshtml"
+#line 69 "SimpleAuthApiTemplate.cshtml"
          foreach (MethodCs method in Model.CodeModel.Methods.Where( m => m.Group.IsNullOrEmpty() && (m.HasSecurity(Model.Definition.ApiKey))))
         {
 
@@ -400,7 +410,7 @@ WriteLiteral("\n\n");
 WriteLiteral("        ");
 
 
-#line 67 "SimpleAuthApiTemplate.cshtml"
+#line 71 "SimpleAuthApiTemplate.cshtml"
       Write(Include(new SimpleAuthMethodTemplate(), new Tuple<MethodCs,bool>(method,false)));
 
 
@@ -409,20 +419,20 @@ WriteLiteral("        ");
 WriteLiteral("\n");
 
 
-#line 68 "SimpleAuthApiTemplate.cshtml"
+#line 72 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 68 "SimpleAuthApiTemplate.cshtml"
+#line 72 "SimpleAuthApiTemplate.cshtml"
    Write(EmptyLine);
 
 
 #line default
 #line hidden
 
-#line 68 "SimpleAuthApiTemplate.cshtml"
+#line 72 "SimpleAuthApiTemplate.cshtml"
                   
 
 
@@ -433,7 +443,7 @@ WriteLiteral("        ");
 WriteLiteral("\n");
 
 
-#line 70 "SimpleAuthApiTemplate.cshtml"
+#line 74 "SimpleAuthApiTemplate.cshtml"
         }
 
 
@@ -442,13 +452,13 @@ WriteLiteral("\n");
 WriteLiteral("\n");
 
 
-#line 72 "SimpleAuthApiTemplate.cshtml"
+#line 76 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 72 "SimpleAuthApiTemplate.cshtml"
+#line 76 "SimpleAuthApiTemplate.cshtml"
          foreach (MethodGroupCs operation in Model.Operations)
         {
 
@@ -458,7 +468,7 @@ WriteLiteral("\n");
 WriteLiteral("        ");
 
 
-#line 74 "SimpleAuthApiTemplate.cshtml"
+#line 78 "SimpleAuthApiTemplate.cshtml"
       Write(Include(new SimpleAuthApiGroupedCallsTemplate(), new Tuple<ApiModel,MethodGroupCs>(Model,operation)));
 
 
@@ -467,20 +477,20 @@ WriteLiteral("        ");
 WriteLiteral("\n");
 
 
-#line 75 "SimpleAuthApiTemplate.cshtml"
+#line 79 "SimpleAuthApiTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 75 "SimpleAuthApiTemplate.cshtml"
+#line 79 "SimpleAuthApiTemplate.cshtml"
    Write(EmptyLine);
 
 
 #line default
 #line hidden
 
-#line 75 "SimpleAuthApiTemplate.cshtml"
+#line 79 "SimpleAuthApiTemplate.cshtml"
                   
         }
 

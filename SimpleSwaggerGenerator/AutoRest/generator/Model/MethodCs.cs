@@ -64,7 +64,7 @@ namespace AutoRest.CSharp.Model
         public virtual string GetSyncMethodParameterDeclaration(bool addCustomHeaderParameters)
         {
             List<string> declarations = new List<string>();
-            foreach (var parameter in LocalParameters)
+            foreach (var parameter in LogicalParameters.OrderByDescending(x=> x.IsRequired))
             {
                 string format = (parameter.IsRequired ? "{0} {1}" : "{0} {1} = {2}");
 
@@ -76,7 +76,6 @@ namespace AutoRest.CSharp.Model
                 declarations.Add(string.Format(CultureInfo.InvariantCulture,
                     format, parameter.ModelTypeName, parameter.Name, defaultValue));
             }
-
             //if (addCustomHeaderParameters)
             //{
             //    declarations.Add("System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null");
@@ -459,86 +458,7 @@ namespace AutoRest.CSharp.Model
         {
             var builder = new IndentedStringBuilder();
 
-            foreach (var pathParameter in this.LogicalParameters.Where(p => p.Location == ParameterLocation.Path))
-            {
-                string replaceString = "{0} = {0}.Replace(\"{{{1}}}\", System.Uri.EscapeDataString({2}));";
-                if (pathParameter.SkipUrlEncoding())
-                {
-                    replaceString = "{0} = {0}.Replace(\"{{{1}}}\", {2});";
-                }
-                var urlPathName = pathParameter.SerializedName;
-                if (pathParameter.ModelType is SequenceType)
-                {
-                    builder.AppendLine(replaceString,
-                    variableName,
-                    urlPathName,
-                    pathParameter.GetFormattedReferenceValue(ClientReference));
-                }
-                else
-                {
-                    builder.AppendLine(replaceString,
-                    variableName,
-                    urlPathName,
-                    pathParameter.ModelType.ToString(ClientReference, pathParameter.Name));
-                }
-            }
-            if (this.LogicalParameters.Any(p => p.Location == ParameterLocation.Query))
-            {
-                builder.AppendLine("System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();");
-                foreach (var queryParameter in this.LogicalParameters.Where(p => p.Location == ParameterLocation.Query))
-                {
-                    var replaceString = "_queryParameters.Add(string.Format(\"{0}={{0}}\", System.Uri.EscapeDataString({1})));";
-                    if ((queryParameter as ParameterCs).IsNullable())
-                    {
-                        builder.AppendLine("if ({0} != null)", queryParameter.Name)
-                            .AppendLine("{").Indent();
-                    }
 
-                    if (queryParameter.SkipUrlEncoding())
-                    {
-                        replaceString = "_queryParameters.Add(string.Format(\"{0}={{0}}\", {1}));";
-                    }
-
-                    if (queryParameter.CollectionFormat == CollectionFormat.Multi)
-                    {
-                        builder.AppendLine("if ({0}.Count == 0)", queryParameter.Name)
-                           .AppendLine("{").Indent()
-                           .AppendLine(replaceString, queryParameter.SerializedName, "string.Empty").Outdent()
-                           .AppendLine("}")
-                           .AppendLine("else")
-                           .AppendLine("{").Indent()
-                           .AppendLine("foreach (var _item in {0})", queryParameter.Name)
-                           .AppendLine("{").Indent()
-                           .AppendLine(replaceString, queryParameter.SerializedName, "_item ?? string.Empty").Outdent()
-                           .AppendLine("}").Outdent()
-                           .AppendLine("}").Outdent();
-                    }
-                    else
-                    {
-                        builder.AppendLine(replaceString,
-                                queryParameter.SerializedName, queryParameter.GetFormattedReferenceValue(ClientReference));
-                    }
-
-                    if ((queryParameter as ParameterCs).IsNullable())
-                    {
-                        builder.Outdent()
-                            .AppendLine("}");
-                    }
-                }
-
-                builder.AppendLine("if (_queryParameters.Count > 0)")
-                    .AppendLine("{").Indent();
-                if (this.Extensions.ContainsKey("nextLinkMethod") && (bool)this.Extensions["nextLinkMethod"])
-                {
-                    builder.AppendLine("{0} += ({0}.Contains(\"?\") ? \"&\" : \"?\") + string.Join(\"&\", _queryParameters);", variableName);
-                }
-                else
-                {
-                    builder.AppendLine("{0} += \"?\" + string.Join(\"&\", _queryParameters);", variableName);
-                }
-
-                builder.Outdent().AppendLine("}");
-            }
 
             return builder.ToString();
         }

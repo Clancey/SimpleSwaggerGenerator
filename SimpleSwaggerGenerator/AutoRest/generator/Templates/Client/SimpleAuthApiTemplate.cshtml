@@ -11,6 +11,7 @@
 namespace @Settings.Namespace
 {
     using SimpleAuth;
+    using System.Net.Http;
 @foreach (var usingString in Model.CodeModel.Usings) {
     @:using @usingString;
 }
@@ -25,6 +26,9 @@ namespace @Settings.Namespace
 
     public partial class @Model.Name : @Model.ApiSubclass
     {
+
+
+        @Model.BuildConstructor()
     	/// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>

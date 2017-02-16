@@ -124,22 +124,6 @@ namespace AutoRest.CSharp
                 	await Write(enumTemplate, Path.Combine(Settings.Instance.ModelsName, $"{enumTemplate.Model.Name}{ImplementationFileExtension}"));
             }
 
-    //        // Exceptions
-    //        foreach (CompositeTypeCs exceptionType in codeModel.ErrorTypes)
-    //        {
-    //            var exceptionTemplate = new ExceptionTemplate { Model = exceptionType, };
-				//if (isInMemory)
-				//	GenerateTemplateCode(exceptionTemplate, sb);
-				//else
-    //            	await Write(exceptionTemplate, Path.Combine(Settings.Instance.ModelsName, $"{exceptionTemplate.Model.ExceptionTypeDefinitionName}{ImplementationFileExtension}"));
-    //        }
-
-			//// Xml Serialization
-			//if (codeModel.ShouldGenerateXmlSerialization)
-			//{
-			//    var xmlSerializationTemplate = new XmlSerializationTemplate();
-			//    await Write(xmlSerializationTemplate, Path.Combine(Settings.Instance.ModelsName, $"{XmlSerialization.XmlDeserializationClass}{ImplementationFileExtension}"));
-			//}
 			return sb.ToString();
         }
 

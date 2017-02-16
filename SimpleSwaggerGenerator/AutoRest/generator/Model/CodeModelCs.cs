@@ -27,6 +27,7 @@ namespace AutoRest.CSharp.Model
             get
             {
                 yield return "System.Threading.Tasks";
+                yield return "System.Linq";
                 yield return "System.Collections.Generic";
                 if (HaveModelNamespace)
                 {

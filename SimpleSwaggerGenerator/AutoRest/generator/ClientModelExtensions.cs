@@ -197,7 +197,7 @@ namespace AutoRest.CSharp
             SequenceType sequence = parameter.ModelType as SequenceType;
             if (sequence == null)
             {
-                return parameter.ModelType.ToString(clientReference, parameter.Name);
+                return parameter.ModelType.ToString(clientReference, parameter.Name,!parameter.IsRequired);
             }
 
             PrimaryType primaryType = sequence.ElementType as PrimaryType;
@@ -260,7 +260,7 @@ namespace AutoRest.CSharp
         /// <param name="clientReference">The reference to the client</param>
         /// <param name="reference">a reference to an instance of the type</param>
         /// <returns></returns>
-        public static string ToString(this IModelType type, string clientReference, string reference)
+        public static string ToString(this IModelType type, string clientReference, string reference, bool isNullable)
         {
             if (type == null || type.IsKindOfString() )
             {
@@ -268,31 +268,18 @@ namespace AutoRest.CSharp
             }
 
             PrimaryType primaryType = type as PrimaryType;
-            string serializationSettings = string.Format(CultureInfo.InvariantCulture, "{0}.SerializationSettings", clientReference);
+
+            string nullCheck = isNullable ? "?" : "";
             if (primaryType != null)
             {
-                if (primaryType.KnownPrimaryType == KnownPrimaryType.Date)
+                if (primaryType.KnownPrimaryType == KnownPrimaryType.Boolean)
                 {
-                    serializationSettings = "new Microsoft.Rest.Serialization.DateJsonConverter()";
-                }
-                else if (primaryType.KnownPrimaryType == KnownPrimaryType.DateTimeRfc1123)
-                {
-                    serializationSettings = "new Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter()";
-                }
-                else if (primaryType.KnownPrimaryType == KnownPrimaryType.Base64Url)
-                {
-                    serializationSettings = "new Microsoft.Rest.Serialization.Base64UrlJsonConverter()";
-                }
-                else if (primaryType.KnownPrimaryType == KnownPrimaryType.UnixTime)
-                {
-                    serializationSettings = "new Microsoft.Rest.Serialization.UnixTimeJsonConverter()";
+                    return $"{reference}{nullCheck}.ToString().ToLower()";
                 }
             }
+          
 
-            return string.Format(CultureInfo.InvariantCulture,
-                    "Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject({0}, {1}).Trim('\"')",
-                    reference,
-                    serializationSettings);
+            return $"{reference}{nullCheck}.ToString()";
         }
 
         /// <summary>
@@ -420,13 +407,13 @@ namespace AutoRest.CSharp
                         constraintCheck = $"{valueReference} < {constraintValue}";
                         break;
                     case Constraint.MaxItems:
-                        constraintCheck = $"{valueReference}.Count > {constraintValue}";
+                        constraintCheck = $"{valueReference}.Length > {constraintValue}";
                         break;
                     case Constraint.MaxLength:
                         constraintCheck = $"{valueReference}.Length > {constraintValue}";
                         break;
                     case Constraint.MinItems:
-                        constraintCheck = $"{valueReference}.Count < {constraintValue}";
+                        constraintCheck = $"{valueReference}.Length < {constraintValue}";
                         break;
                     case Constraint.MinLength:
                         constraintCheck = $"{valueReference}.Length < {constraintValue}";
@@ -464,7 +451,7 @@ namespace AutoRest.CSharp
                     {
                         sb.AppendLine("if ({0})", constraintCheck)
                             .AppendLine("{").Indent()
-                            .AppendLine("throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.{0}, \"{1}\", {2});",
+                          .AppendLine("throw new System.Exception(\"Validation Failed: {0}, '{1}', {2}\");",
                                 constraint, valueReference.Replace("this.", ""), constraintValue).Outdent()
                             .AppendLine("}");
                     }
@@ -472,7 +459,7 @@ namespace AutoRest.CSharp
                     {
                         sb.AppendLine("if ({0})", constraintCheck)
                             .AppendLine("{").Indent()
-                            .AppendLine("throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.{0}, \"{1}\");",
+                            .AppendLine("throw new System.Exception(\"Validation Failed: {0}, '{1}'\");",
                                 constraint, valueReference.Replace("this.", "")).Outdent()
                             .AppendLine("}");
                     }
