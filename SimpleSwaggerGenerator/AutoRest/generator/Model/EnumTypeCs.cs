@@ -9,7 +9,7 @@ namespace AutoRest.CSharp.Model
 {
     public class EnumTypeCs : EnumType, IExtendedModelType
     {
-        protected override string ModelAsStringType => "string";
+        protected override string ModelAsStringType => Name;
 
         public bool IsValueType => !ModelAsString; 
     }

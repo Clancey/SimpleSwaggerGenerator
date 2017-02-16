@@ -38,15 +38,6 @@ public override void Execute()
 {
 
 #line 5 "EnumTemplate.cshtml"
-Write(Header("// "));
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-
-#line 6 "EnumTemplate.cshtml"
 Write(EmptyLine);
 
 
@@ -55,7 +46,7 @@ Write(EmptyLine);
 WriteLiteral("\nnamespace ");
 
 
-#line 7 "EnumTemplate.cshtml"
+#line 6 "EnumTemplate.cshtml"
       Write(Settings.Namespace);
 
 
@@ -64,7 +55,7 @@ WriteLiteral("\nnamespace ");
 WriteLiteral(".");
 
 
-#line 7 "EnumTemplate.cshtml"
+#line 6 "EnumTemplate.cshtml"
                             Write(Settings.ModelsName);
 
 
@@ -73,7 +64,7 @@ WriteLiteral(".");
 WriteLiteral("\n{\n");
 
 
-#line 9 "EnumTemplate.cshtml"
+#line 8 "EnumTemplate.cshtml"
 Write(EmptyLine);
 
 
@@ -84,7 +75,7 @@ WriteLiteral("\n    /// <summary>\n");
 WriteLiteral("    ");
 
 
-#line 11 "EnumTemplate.cshtml"
+#line 10 "EnumTemplate.cshtml"
 Write(WrapComment("/// ", "Defines values for " + Model.Name + "."));
 
 
@@ -93,13 +84,13 @@ Write(WrapComment("/// ", "Defines values for " + Model.Name + "."));
 WriteLiteral("\n    /// </summary>\n");
 
 
-#line 13 "EnumTemplate.cshtml"
+#line 12 "EnumTemplate.cshtml"
     
 
 #line default
 #line hidden
 
-#line 13 "EnumTemplate.cshtml"
+#line 12 "EnumTemplate.cshtml"
      if (!Model.ModelAsString)
     {
 
@@ -116,7 +107,7 @@ WriteLiteral("    ");
 WriteLiteral("public enum ");
 
 
-#line 16 "EnumTemplate.cshtml"
+#line 15 "EnumTemplate.cshtml"
              Write(Model.ClassName);
 
 
@@ -129,7 +120,7 @@ WriteLiteral("    ");
 WriteLiteral("{\n");
 
 
-#line 18 "EnumTemplate.cshtml"
+#line 17 "EnumTemplate.cshtml"
         for (int i = 0; i < Model.Values.Count - 1; i++)
         {
 
@@ -139,7 +130,7 @@ WriteLiteral("{\n");
 WriteLiteral("        [System.Runtime.Serialization.EnumMember(Value = \"");
 
 
-#line 20 "EnumTemplate.cshtml"
+#line 19 "EnumTemplate.cshtml"
                                                        Write(Model.Values[i].SerializedName);
 
 
@@ -150,7 +141,7 @@ WriteLiteral("\")]\n");
 WriteLiteral("        ");
 
 
-#line 21 "EnumTemplate.cshtml"
+#line 20 "EnumTemplate.cshtml"
       Write(Model.Values[i].MemberName);
 
 
@@ -159,7 +150,7 @@ WriteLiteral("        ");
 WriteLiteral(",\n");
 
 
-#line 22 "EnumTemplate.cshtml"
+#line 21 "EnumTemplate.cshtml"
         }
 
 
@@ -168,7 +159,7 @@ WriteLiteral(",\n");
 WriteLiteral("        [System.Runtime.Serialization.EnumMember(Value = \"");
 
 
-#line 23 "EnumTemplate.cshtml"
+#line 22 "EnumTemplate.cshtml"
                                                        Write(Model.Values.Last().SerializedName);
 
 
@@ -179,7 +170,7 @@ WriteLiteral("\")]\n");
 WriteLiteral("        ");
 
 
-#line 24 "EnumTemplate.cshtml"
+#line 23 "EnumTemplate.cshtml"
       Write(Model.Values.Last().MemberName);
 
 
@@ -192,7 +183,7 @@ WriteLiteral("    ");
 WriteLiteral("}\n");
 
 
-#line 26 "EnumTemplate.cshtml"
+#line 25 "EnumTemplate.cshtml"
     if (Model.CodeModel.ShouldGenerateXmlSerialization) {
 
 #line default
@@ -200,7 +191,7 @@ WriteLiteral("}\n");
 WriteLiteral("\n    internal static class ");
 
 
-#line 27 "EnumTemplate.cshtml"
+#line 26 "EnumTemplate.cshtml"
                       Write(Model.ClassName);
 
 
@@ -209,7 +200,7 @@ WriteLiteral("\n    internal static class ");
 WriteLiteral("EnumExtension \n    {\n        internal static string ToSerializedValue(this ");
 
 
-#line 29 "EnumTemplate.cshtml"
+#line 28 "EnumTemplate.cshtml"
                                                   Write(Model.ClassName);
 
 
@@ -218,7 +209,7 @@ WriteLiteral("EnumExtension \n    {\n        internal static string ToSerialized
 WriteLiteral("? value )  => \n            value == null ? null : (( ");
 
 
-#line 30 "EnumTemplate.cshtml"
+#line 29 "EnumTemplate.cshtml"
                                   Write(Model.ClassName);
 
 
@@ -227,7 +218,7 @@ WriteLiteral("? value )  => \n            value == null ? null : (( ");
 WriteLiteral(" )value).ToSerializedValue();\n");
 
 
-#line 31 "EnumTemplate.cshtml"
+#line 30 "EnumTemplate.cshtml"
 Write(EmptyLine);
 
 
@@ -236,7 +227,7 @@ Write(EmptyLine);
 WriteLiteral("\n        internal static string ToSerializedValue(this ");
 
 
-#line 32 "EnumTemplate.cshtml"
+#line 31 "EnumTemplate.cshtml"
                                                   Write(Model.ClassName);
 
 
@@ -245,13 +236,13 @@ WriteLiteral("\n        internal static string ToSerializedValue(this ");
 WriteLiteral(" value ) \n        {\n            switch( value )\n            {\n");
 
 
-#line 36 "EnumTemplate.cshtml"
+#line 35 "EnumTemplate.cshtml"
             
 
 #line default
 #line hidden
 
-#line 36 "EnumTemplate.cshtml"
+#line 35 "EnumTemplate.cshtml"
              for (int i = 0; i < Model.Values.Count; i++)
             {
 
@@ -260,7 +251,7 @@ WriteLiteral(" value ) \n        {\n            switch( value )\n            {\n
 WriteLiteral("\n                case ");
 
 
-#line 38 "EnumTemplate.cshtml"
+#line 37 "EnumTemplate.cshtml"
                  Write(Model.ClassName);
 
 
@@ -269,7 +260,7 @@ WriteLiteral("\n                case ");
 WriteLiteral(".");
 
 
-#line 38 "EnumTemplate.cshtml"
+#line 37 "EnumTemplate.cshtml"
                                     Write(Model.Values[i].MemberName);
 
 
@@ -278,7 +269,7 @@ WriteLiteral(".");
 WriteLiteral(":\n                    return \"");
 
 
-#line 39 "EnumTemplate.cshtml"
+#line 38 "EnumTemplate.cshtml"
                        Write(Model.Values[i].SerializedName);
 
 
@@ -289,7 +280,7 @@ WriteLiteral("\";");
 WriteLiteral("\n");
 
 
-#line 40 "EnumTemplate.cshtml"
+#line 39 "EnumTemplate.cshtml"
             }
 
 
@@ -298,7 +289,7 @@ WriteLiteral("\n");
 WriteLiteral("\n            }\n            return null;\n        }\n");
 
 
-#line 45 "EnumTemplate.cshtml"
+#line 44 "EnumTemplate.cshtml"
 Write(EmptyLine);
 
 
@@ -307,7 +298,7 @@ Write(EmptyLine);
 WriteLiteral("\n        internal static ");
 
 
-#line 46 "EnumTemplate.cshtml"
+#line 45 "EnumTemplate.cshtml"
                     Write(Model.ClassName);
 
 
@@ -316,7 +307,7 @@ WriteLiteral("\n        internal static ");
 WriteLiteral("? Parse");
 
 
-#line 46 "EnumTemplate.cshtml"
+#line 45 "EnumTemplate.cshtml"
                                              Write(Model.ClassName);
 
 
@@ -325,13 +316,13 @@ WriteLiteral("? Parse");
 WriteLiteral("( this string value )\n        { \n            switch( value )\n            {\n");
 
 
-#line 50 "EnumTemplate.cshtml"
+#line 49 "EnumTemplate.cshtml"
             
 
 #line default
 #line hidden
 
-#line 50 "EnumTemplate.cshtml"
+#line 49 "EnumTemplate.cshtml"
              for (int i = 0; i < Model.Values.Count; i++)   
             {
 
@@ -340,7 +331,7 @@ WriteLiteral("( this string value )\n        { \n            switch( value )\n  
 WriteLiteral("\n                case \"");
 
 
-#line 52 "EnumTemplate.cshtml"
+#line 51 "EnumTemplate.cshtml"
                  Write(Model.Values[i].SerializedName);
 
 
@@ -349,7 +340,7 @@ WriteLiteral("\n                case \"");
 WriteLiteral("\": \n                    return ");
 
 
-#line 53 "EnumTemplate.cshtml"
+#line 52 "EnumTemplate.cshtml"
                        Write(Model.ClassName);
 
 
@@ -358,7 +349,7 @@ WriteLiteral("\": \n                    return ");
 WriteLiteral(".");
 
 
-#line 53 "EnumTemplate.cshtml"
+#line 52 "EnumTemplate.cshtml"
                                           Write(Model.Values[i].MemberName);
 
 
@@ -369,7 +360,7 @@ WriteLiteral(";");
 WriteLiteral("\n");
 
 
-#line 54 "EnumTemplate.cshtml"
+#line 53 "EnumTemplate.cshtml"
             }
 
 
@@ -378,7 +369,7 @@ WriteLiteral("\n");
 WriteLiteral("            }\n            return null;\n        }\n        \n    }\n");
 
 
-#line 60 "EnumTemplate.cshtml"
+#line 59 "EnumTemplate.cshtml"
        }
     
     }
@@ -393,7 +384,7 @@ WriteLiteral("    ");
 WriteLiteral("public static class ");
 
 
-#line 65 "EnumTemplate.cshtml"
+#line 64 "EnumTemplate.cshtml"
                      Write(Model.ClassName);
 
 
@@ -406,7 +397,7 @@ WriteLiteral("    ");
 WriteLiteral("{\n");
 
 
-#line 67 "EnumTemplate.cshtml"
+#line 66 "EnumTemplate.cshtml"
         foreach (var t in Model.Values)
         {
 
@@ -416,7 +407,7 @@ WriteLiteral("{\n");
 WriteLiteral("        public const string ");
 
 
-#line 69 "EnumTemplate.cshtml"
+#line 68 "EnumTemplate.cshtml"
                          Write(t.MemberName);
 
 
@@ -425,7 +416,7 @@ WriteLiteral("        public const string ");
 WriteLiteral(" = \"");
 
 
-#line 69 "EnumTemplate.cshtml"
+#line 68 "EnumTemplate.cshtml"
                                           Write(t.SerializedName);
 
 
@@ -434,7 +425,7 @@ WriteLiteral(" = \"");
 WriteLiteral("\";\n");
 
 
-#line 70 "EnumTemplate.cshtml"
+#line 69 "EnumTemplate.cshtml"
         }
 
 
@@ -445,7 +436,7 @@ WriteLiteral("    ");
 WriteLiteral("}\n");
 
 
-#line 72 "EnumTemplate.cshtml"
+#line 71 "EnumTemplate.cshtml"
     }
 
 

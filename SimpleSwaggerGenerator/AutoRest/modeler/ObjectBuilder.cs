@@ -99,9 +99,37 @@ namespace AutoRest.Swagger
                 }
                 else
                 {
-                    enumType.ModelAsString = true;
-                    enumType.SetName( string.Empty);
-                    enumType.SerializedName = string.Empty;
+                    enumType.SetName(serviceTypeName);
+                    enumType.SerializedName = enumType.Name;
+                    enumType.ModelAsString = false;
+                    if (string.IsNullOrEmpty(enumType.Name))
+                    {
+                        throw new InvalidOperationException(
+                            string.Format(CultureInfo.InvariantCulture,
+                                "{0} extension needs to specify an enum name.",
+                                Core.Model.XmsExtensions.Enum.Name));
+                    }
+                    var existingEnum =
+                        Modeler.CodeModel.EnumTypes.FirstOrDefault(
+                            e => e.Name.RawValue.EqualsIgnoreCase(enumType.Name.RawValue));
+                    if (existingEnum != null)
+                    {
+                        if (!existingEnum.StructurallyEquals(enumType))
+                        {
+                            throw new InvalidOperationException(
+                                string.Format(CultureInfo.InvariantCulture,
+                                    "Swagger document contains two or more {0} extensions with the same name '{1}' and different values.",
+                                    Core.Model.XmsExtensions.Enum.Name,
+                                    enumType.Name));
+                        }
+                        // Use the existing one!
+                        enumType = existingEnum;
+                    }
+                    else
+                    {
+                        Modeler.CodeModel.Add(enumType);
+                    }
+
                 }
                 enumType.XmlProperties = (SwaggerObject as Schema)?.Xml;
                 return enumType;

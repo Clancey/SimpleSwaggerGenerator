@@ -9,7 +9,7 @@ namespace SimpleSwaggerGenerator.CLI
 			var generator = new Generator
 			{
 				SwaggerFileLocation = "/Users/clancey/Downloads/swagger.json",
-				NameSpace = "MobileCenterApis",
+				NameSpace = "MobileCenterApi",
 				//OutputToMemory = true,
 			};
 			var output = generator.Generate();
