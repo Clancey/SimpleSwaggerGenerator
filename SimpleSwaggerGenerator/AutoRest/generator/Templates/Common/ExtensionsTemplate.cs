@@ -71,105 +71,39 @@ WriteLiteral("\n{\n");
 
 
 #line 10 "ExtensionsTemplate.cshtml"
- foreach (var usingString in Model.Usings) {
-
-
-#line default
-#line hidden
-WriteLiteral("    ");
-
-WriteLiteral("using ");
-
-
-#line 11 "ExtensionsTemplate.cshtml"
-       Write(usingString);
-
-
-#line default
-#line hidden
-WriteLiteral(";\n");
-
-
-#line 12 "ExtensionsTemplate.cshtml"
-}
-
-
-#line default
-#line hidden
-
-#line 13 "ExtensionsTemplate.cshtml"
 Write(EmptyLine);
 
 
 #line default
 #line hidden
-WriteLiteral("\n    /// <summary>\n    /// Extension methods for ");
+WriteLiteral(@"
 
-
-#line 15 "ExtensionsTemplate.cshtml"
-                          Write(Model.ExtensionTypeName);
-
-
-#line default
-#line hidden
-WriteLiteral(".\n    /// </summary>\n    public static partial class ");
-
-
-#line 17 "ExtensionsTemplate.cshtml"
-                            Write(Model.ExtensionTypeName);
-
-
-#line default
-#line hidden
-WriteLiteral("Extensions\n    {\n");
-
-
-#line 19 "ExtensionsTemplate.cshtml"
-        
-
-#line default
-#line hidden
-
-#line 19 "ExtensionsTemplate.cshtml"
-         foreach (MethodCs method in Model.Methods)
+    using System;
+    using System.Runtime.Serialization;
+    public static partial class EnumExtensions
+    {
+        public static string GetEnumMember<T>(this T enumerationValue) where T : struct, IConvertible
         {
+            var type = enumerationValue.GetType();
+            if (!type.IsEnum)
+            {
+                throw new ArgumentException(""EnumerationValue must be of Enum type"", ""enumerationValue"");
+            }
+            var memberInfo = type.GetMember(enumerationValue.ToString());
+            if (memberInfo != null && memberInfo.Length > 0)
+            {
+                var attrs = memberInfo[0].GetCustomAttributes(typeof(EnumMemberAttribute), false);
 
-
-#line default
-#line hidden
-WriteLiteral("            ");
-
-
-#line 21 "ExtensionsTemplate.cshtml"
-          Write(Include(new ExtensionMethodTemplate(), method));
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-
-#line 22 "ExtensionsTemplate.cshtml"
-            
-
-#line default
-#line hidden
-
-#line 22 "ExtensionsTemplate.cshtml"
-       Write(EmptyLine);
-
-
-#line default
-#line hidden
-
-#line 22 "ExtensionsTemplate.cshtml"
-                       
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((EnumMemberAttribute)attrs[0]).Value;
+                }
+            }
+            return enumerationValue.ToString();
         }
-
-
-#line default
-#line hidden
-WriteLiteral("    }\n}\n");
+    }
+}
+");
 
 }
 }

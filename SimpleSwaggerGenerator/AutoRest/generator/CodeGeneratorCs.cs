@@ -124,6 +124,12 @@ namespace AutoRest.CSharp
                 	await Write(enumTemplate, Path.Combine(Settings.Instance.ModelsName, $"{enumTemplate.Model.Name}{ImplementationFileExtension}"));
             }
 
+            var extensionTemplate = new ExtensionsTemplate ();
+            if (isInMemory)
+                GenerateTemplateCode(extensionTemplate, sb);
+            else
+                await Write(extensionTemplate, Path.Combine($"{codeModel.Name}Extensions{ImplementationFileExtension}"));
+
 			return sb.ToString();
         }
 

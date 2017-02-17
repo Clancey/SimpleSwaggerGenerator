@@ -68,45 +68,6 @@ namespace @(Settings.Namespace).@(Settings.ModelsName)
 
         @EmptyLine
 
-        @if (!string.IsNullOrEmpty(Model.ConstructorParameters))
-        {
-        @:/// <summary>
-        @:@WrapComment("/// ", ("Initializes a new instance of the " + Model.Name + " class.").EscapeXmlComment())
-        @:/// </summary>
-        foreach (var parameter in Model.ConstructorParametersDocumentation)
-        {
-        @:@WrapComment("/// ", parameter)
-        }
-        @:public @(Model.Name)(@Model.ConstructorParameters)
-            if (!string.IsNullOrEmpty(Model.BaseConstructorCall))
-            {
-            @:@(Model.BaseConstructorCall)
-            }
-        @:{
-
-            foreach (var property in Model.ComposedProperties.Where(p => p.ModelType is CompositeType
-                     && !p.IsConstant
-                     && p.IsRequired
-                     && ((CompositeType)p.ModelType).ContainsConstantProperties))
-            {
-            @:@(property.Name) = new @(property.ModelTypeName)();
-            }
-
-            foreach (var property in Model.Properties.Where(p => !p.IsConstant))
-            {
-                var propName = CodeNamer.Instance.CamelCase(property.Name);
-                if (property.Name.Value.Equals(propName))
-                {
-            @:this.@(property.Name) = @propName;
-                }
-                else
-                {
-            @:@(property.Name) = @propName;
-                }
-            }            
-
-        @:}
-        }
 
         @if (Model.Properties.Any(p => p.IsConstant))
         {

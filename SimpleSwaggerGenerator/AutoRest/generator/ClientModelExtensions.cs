@@ -277,6 +277,10 @@ namespace AutoRest.CSharp
                     return $"{reference}{nullCheck}.ToString().ToLower()";
                 }
             }
+            if (type is EnumType)
+            {
+                return $"{reference}{nullCheck}.GetEnumMember()";
+            }
           
 
             return $"{reference}{nullCheck}.ToString()";

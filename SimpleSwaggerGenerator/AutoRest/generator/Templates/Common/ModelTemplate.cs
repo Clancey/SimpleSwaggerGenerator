@@ -409,245 +409,16 @@ WriteLiteral("        ");
 
 #line default
 #line hidden
-WriteLiteral("\n\n");
+WriteLiteral("\n\n\n");
 
 
-#line 71 "ModelTemplate.cshtml"
+#line 72 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 71 "ModelTemplate.cshtml"
-         if (!string.IsNullOrEmpty(Model.ConstructorParameters))
-        {
-
-
-#line default
-#line hidden
-WriteLiteral("        ");
-
-WriteLiteral("/// <summary>\n");
-
-WriteLiteral("        ");
-
-
-#line 74 "ModelTemplate.cshtml"
-     Write(WrapComment("/// ", ("Initializes a new instance of the " + Model.Name + " class.").EscapeXmlComment()));
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-WriteLiteral("        ");
-
-WriteLiteral("/// </summary>\n");
-
-
-#line 76 "ModelTemplate.cshtml"
-        foreach (var parameter in Model.ConstructorParametersDocumentation)
-        {
-
-
-#line default
-#line hidden
-WriteLiteral("        ");
-
-
-#line 78 "ModelTemplate.cshtml"
-     Write(WrapComment("/// ", parameter));
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-
-#line 79 "ModelTemplate.cshtml"
-        }
-
-
-#line default
-#line hidden
-WriteLiteral("        ");
-
-WriteLiteral("public ");
-
-
-#line 80 "ModelTemplate.cshtml"
-             Write(Model.Name);
-
-
-#line default
-#line hidden
-WriteLiteral("(");
-
-
-#line 80 "ModelTemplate.cshtml"
-                          Write(Model.ConstructorParameters);
-
-
-#line default
-#line hidden
-WriteLiteral(")\n");
-
-
-#line 81 "ModelTemplate.cshtml"
-            if (!string.IsNullOrEmpty(Model.BaseConstructorCall))
-            {
-
-
-#line default
-#line hidden
-WriteLiteral("            ");
-
-
-#line 83 "ModelTemplate.cshtml"
-          Write(Model.BaseConstructorCall);
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-
-#line 84 "ModelTemplate.cshtml"
-            }
-
-
-#line default
-#line hidden
-WriteLiteral("        ");
-
-WriteLiteral("{\n");
-
-
-#line 86 "ModelTemplate.cshtml"
-
-            foreach (var property in Model.ComposedProperties.Where(p => p.ModelType is CompositeType
-                     && !p.IsConstant
-                     && p.IsRequired
-                     && ((CompositeType)p.ModelType).ContainsConstantProperties))
-            {
-
-
-#line default
-#line hidden
-WriteLiteral("            ");
-
-
-#line 92 "ModelTemplate.cshtml"
-          Write(property.Name);
-
-
-#line default
-#line hidden
-WriteLiteral(" = new ");
-
-
-#line 92 "ModelTemplate.cshtml"
-                                 Write(property.ModelTypeName);
-
-
-#line default
-#line hidden
-WriteLiteral("();\n");
-
-
-#line 93 "ModelTemplate.cshtml"
-            }
-
-            foreach (var property in Model.Properties.Where(p => !p.IsConstant))
-            {
-                var propName = CodeNamer.Instance.CamelCase(property.Name);
-                if (property.Name.Value.Equals(propName))
-                {
-
-
-#line default
-#line hidden
-WriteLiteral("            ");
-
-WriteLiteral("this.");
-
-
-#line 100 "ModelTemplate.cshtml"
-               Write(property.Name);
-
-
-#line default
-#line hidden
-WriteLiteral(" = ");
-
-
-#line 100 "ModelTemplate.cshtml"
-                                 Write(propName);
-
-
-#line default
-#line hidden
-WriteLiteral(";\n");
-
-
-#line 101 "ModelTemplate.cshtml"
-                }
-                else
-                {
-
-
-#line default
-#line hidden
-WriteLiteral("            ");
-
-
-#line 104 "ModelTemplate.cshtml"
-          Write(property.Name);
-
-
-#line default
-#line hidden
-WriteLiteral(" = ");
-
-
-#line 104 "ModelTemplate.cshtml"
-                            Write(propName);
-
-
-#line default
-#line hidden
-WriteLiteral(";\n");
-
-
-#line 105 "ModelTemplate.cshtml"
-                }
-            }            
-
-
-
-#line default
-#line hidden
-WriteLiteral("        ");
-
-WriteLiteral("}\n");
-
-
-#line 109 "ModelTemplate.cshtml"
-        }
-
-
-#line default
-#line hidden
-WriteLiteral("\n");
-
-
-#line 111 "ModelTemplate.cshtml"
-        
-
-#line default
-#line hidden
-
-#line 111 "ModelTemplate.cshtml"
+#line 72 "ModelTemplate.cshtml"
          if (Model.Properties.Any(p => p.IsConstant))
         {
 
@@ -661,7 +432,7 @@ WriteLiteral("/// <summary>\n");
 WriteLiteral("        ");
 
 
-#line 114 "ModelTemplate.cshtml"
+#line 75 "ModelTemplate.cshtml"
      Write(WrapComment("/// ", ("Static constructor for " + Model.Name + " class.").EscapeXmlComment()));
 
 
@@ -678,7 +449,7 @@ WriteLiteral("        ");
 WriteLiteral("static ");
 
 
-#line 116 "ModelTemplate.cshtml"
+#line 77 "ModelTemplate.cshtml"
              Write(Model.Name);
 
 
@@ -691,7 +462,7 @@ WriteLiteral("        ");
 WriteLiteral("{\n");
 
 
-#line 118 "ModelTemplate.cshtml"
+#line 79 "ModelTemplate.cshtml"
             foreach (var property in Model.Properties.Where(p => p.IsConstant))
             {
 
@@ -701,7 +472,7 @@ WriteLiteral("{\n");
 WriteLiteral("            ");
 
 
-#line 120 "ModelTemplate.cshtml"
+#line 81 "ModelTemplate.cshtml"
           Write(property.Name);
 
 
@@ -710,7 +481,7 @@ WriteLiteral("            ");
 WriteLiteral(" = ");
 
 
-#line 120 "ModelTemplate.cshtml"
+#line 81 "ModelTemplate.cshtml"
                              Write(property.DefaultValue);
 
 
@@ -719,7 +490,7 @@ WriteLiteral(" = ");
 WriteLiteral(";\n");
 
 
-#line 121 "ModelTemplate.cshtml"
+#line 82 "ModelTemplate.cshtml"
             }
 
 
@@ -730,7 +501,7 @@ WriteLiteral("        ");
 WriteLiteral("}\n");
 
 
-#line 123 "ModelTemplate.cshtml"
+#line 84 "ModelTemplate.cshtml"
         }
 
 
@@ -741,7 +512,7 @@ WriteLiteral("\n");
 WriteLiteral("        ");
 
 
-#line 125 "ModelTemplate.cshtml"
+#line 86 "ModelTemplate.cshtml"
    Write(EmptyLine);
 
 
@@ -750,13 +521,13 @@ WriteLiteral("        ");
 WriteLiteral("\n");
 
 
-#line 126 "ModelTemplate.cshtml"
+#line 87 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 126 "ModelTemplate.cshtml"
+#line 87 "ModelTemplate.cshtml"
          foreach (var property in Model.Properties.Where(p => !p.IsConstant))
         {
 
@@ -770,7 +541,7 @@ WriteLiteral("/// <summary>\n");
 WriteLiteral("        ");
 
 
-#line 129 "ModelTemplate.cshtml"
+#line 90 "ModelTemplate.cshtml"
      Write(WrapComment("/// ", property.GetFormattedPropertySummary()));
 
 
@@ -783,7 +554,7 @@ WriteLiteral("        ");
 WriteLiteral("/// </summary>\n");
 
 
-#line 131 "ModelTemplate.cshtml"
+#line 92 "ModelTemplate.cshtml"
             if(!string.IsNullOrEmpty(property.Summary) && !string.IsNullOrEmpty(property.Documentation))
             { 
 
@@ -797,7 +568,7 @@ WriteLiteral("/// <remarks>\n");
 WriteLiteral("        ");
 
 
-#line 134 "ModelTemplate.cshtml"
+#line 95 "ModelTemplate.cshtml"
      Write(WrapComment("/// ", property.Documentation));
 
 
@@ -810,7 +581,7 @@ WriteLiteral("        ");
 WriteLiteral("/// </remarks>\n");
 
 
-#line 136 "ModelTemplate.cshtml"
+#line 97 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.Date))
             {
@@ -824,7 +595,7 @@ WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization
 "ter))]\n");
 
 
-#line 140 "ModelTemplate.cshtml"
+#line 101 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
             {
@@ -838,7 +609,7 @@ WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization
 "3JsonConverter))]\n");
 
 
-#line 144 "ModelTemplate.cshtml"
+#line 105 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.Base64Url))
             {
@@ -852,7 +623,7 @@ WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization
 "onverter))]\n");
 
 
-#line 148 "ModelTemplate.cshtml"
+#line 109 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.UnixTime))
             {
@@ -866,7 +637,7 @@ WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization
 "nverter))]\n");
 
 
-#line 152 "ModelTemplate.cshtml"
+#line 113 "ModelTemplate.cshtml"
             }
 
             if (property.ModelType is DictionaryType && (property.ModelType as DictionaryType).SupportsAdditionalProperties)
@@ -880,7 +651,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonExtensionData]\n");
 
 
-#line 157 "ModelTemplate.cshtml"
+#line 118 "ModelTemplate.cshtml"
             }
             else
             {
@@ -893,7 +664,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonProperty(PropertyName = \"");
 
 
-#line 160 "ModelTemplate.cshtml"
+#line 121 "ModelTemplate.cshtml"
                                                    Write(property.SerializedName);
 
 
@@ -902,7 +673,7 @@ WriteLiteral("[Newtonsoft.Json.JsonProperty(PropertyName = \"");
 WriteLiteral("\")]\n");
 
 
-#line 161 "ModelTemplate.cshtml"
+#line 122 "ModelTemplate.cshtml"
             }
 
 
@@ -913,7 +684,7 @@ WriteLiteral("        ");
 WriteLiteral("public ");
 
 
-#line 162 "ModelTemplate.cshtml"
+#line 123 "ModelTemplate.cshtml"
             Write(property.ModelTypeName);
 
 
@@ -922,7 +693,7 @@ WriteLiteral("public ");
 WriteLiteral(" ");
 
 
-#line 162 "ModelTemplate.cshtml"
+#line 123 "ModelTemplate.cshtml"
                                     Write(property.Name);
 
 
@@ -931,7 +702,7 @@ WriteLiteral(" ");
 WriteLiteral(" { get; ");
 
 
-#line 162 "ModelTemplate.cshtml"
+#line 123 "ModelTemplate.cshtml"
                                                            Write(property.IsReadOnly ? "protected " : "");
 
 
@@ -940,20 +711,20 @@ WriteLiteral(" { get; ");
 WriteLiteral("set; }\n");
 
 
-#line 163 "ModelTemplate.cshtml"
+#line 124 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 163 "ModelTemplate.cshtml"
+#line 124 "ModelTemplate.cshtml"
    Write(EmptyLine);
 
 
 #line default
 #line hidden
 
-#line 163 "ModelTemplate.cshtml"
+#line 124 "ModelTemplate.cshtml"
                   
         }
 
@@ -963,13 +734,13 @@ WriteLiteral("set; }\n");
 WriteLiteral("\n");
 
 
-#line 166 "ModelTemplate.cshtml"
+#line 127 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 166 "ModelTemplate.cshtml"
+#line 127 "ModelTemplate.cshtml"
          foreach (var property in Model.Properties.Where(p => p.IsConstant))
         {
 
@@ -983,7 +754,7 @@ WriteLiteral("/// <summary>\n");
 WriteLiteral("        ");
 
 
-#line 169 "ModelTemplate.cshtml"
+#line 130 "ModelTemplate.cshtml"
      Write(WrapComment("/// ", property.Documentation.EscapeXmlComment()));
 
 
@@ -996,7 +767,7 @@ WriteLiteral("        ");
 WriteLiteral("/// </summary>\n");
 
 
-#line 171 "ModelTemplate.cshtml"
+#line 132 "ModelTemplate.cshtml"
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.Date))
             {
 
@@ -1008,7 +779,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(DateJsonConverter))]\n");
 
 
-#line 174 "ModelTemplate.cshtml"
+#line 135 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.DateTimeRfc1123))
             {
@@ -1021,7 +792,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(DateTimeRfc1123JsonConverter))]\n");
 
 
-#line 178 "ModelTemplate.cshtml"
+#line 139 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.Base64Url))
             {
@@ -1034,7 +805,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(Base64UrlJsonConverter))]\n");
 
 
-#line 182 "ModelTemplate.cshtml"
+#line 143 "ModelTemplate.cshtml"
             }
             if (property.ModelType.IsPrimaryType(KnownPrimaryType.UnixTime))
             {
@@ -1047,7 +818,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonConverter(typeof(UnixTimeJsonConverter))]\n");
 
 
-#line 186 "ModelTemplate.cshtml"
+#line 147 "ModelTemplate.cshtml"
             }
 
 
@@ -1058,7 +829,7 @@ WriteLiteral("        ");
 WriteLiteral("[Newtonsoft.Json.JsonProperty(PropertyName = \"");
 
 
-#line 187 "ModelTemplate.cshtml"
+#line 148 "ModelTemplate.cshtml"
                                                    Write(property.SerializedName);
 
 
@@ -1071,7 +842,7 @@ WriteLiteral("        ");
 WriteLiteral("public static ");
 
 
-#line 188 "ModelTemplate.cshtml"
+#line 149 "ModelTemplate.cshtml"
                    Write(property.ModelTypeName);
 
 
@@ -1080,7 +851,7 @@ WriteLiteral("public static ");
 WriteLiteral(" ");
 
 
-#line 188 "ModelTemplate.cshtml"
+#line 149 "ModelTemplate.cshtml"
                                            Write(property.Name);
 
 
@@ -1089,20 +860,20 @@ WriteLiteral(" ");
 WriteLiteral(" { get; private set; }\n");
 
 
-#line 189 "ModelTemplate.cshtml"
+#line 150 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 189 "ModelTemplate.cshtml"
+#line 150 "ModelTemplate.cshtml"
    Write(EmptyLine);
 
 
 #line default
 #line hidden
 
-#line 189 "ModelTemplate.cshtml"
+#line 150 "ModelTemplate.cshtml"
                   
         }
 
@@ -1110,7 +881,7 @@ WriteLiteral(" { get; private set; }\n");
 #line default
 #line hidden
 
-#line 191 "ModelTemplate.cshtml"
+#line 152 "ModelTemplate.cshtml"
  if(@Model.ShouldValidateChain())
 {
 
@@ -1123,7 +894,7 @@ WriteLiteral("        ");
 WriteLiteral("public ");
 
 
-#line 194 "ModelTemplate.cshtml"
+#line 155 "ModelTemplate.cshtml"
             Write(Model.MethodQualifier);
 
 
@@ -1136,7 +907,7 @@ WriteLiteral("        ");
 WriteLiteral("{\n");
 
 
-#line 196 "ModelTemplate.cshtml"
+#line 157 "ModelTemplate.cshtml"
             bool anythingToValidate = false;
 
             if (Model.BaseModelType != null && Model.BaseModelType.ShouldValidateChain())
@@ -1151,7 +922,7 @@ WriteLiteral("            ");
 WriteLiteral("base.Validate();\n");
 
 
-#line 202 "ModelTemplate.cshtml"
+#line 163 "ModelTemplate.cshtml"
             }
 
             foreach (PropertyCs property in Model.Properties.Where(p => p.IsRequired && !p.IsReadOnly && !p.IsConstant && p.IsNullable() ))
@@ -1166,7 +937,7 @@ WriteLiteral("            ");
 WriteLiteral("if (");
 
 
-#line 207 "ModelTemplate.cshtml"
+#line 168 "ModelTemplate.cshtml"
              Write(property.Name);
 
 
@@ -1183,7 +954,7 @@ WriteLiteral("                ");
 WriteLiteral("throw new System.Exception(\"Property \'");
 
 
-#line 209 "ModelTemplate.cshtml"
+#line 170 "ModelTemplate.cshtml"
                                                    Write(property.Name);
 
 
@@ -1200,7 +971,7 @@ WriteLiteral("            ");
 WriteLiteral("\n");
 
 
-#line 212 "ModelTemplate.cshtml"
+#line 173 "ModelTemplate.cshtml"
             }
             foreach (var property in Model.Properties.Where(p => !p.IsConstant 
                 && (p.Constraints.Any() || !(p.ModelType is PrimaryType))))
@@ -1213,7 +984,7 @@ WriteLiteral("\n");
 WriteLiteral("            ");
 
 
-#line 217 "ModelTemplate.cshtml"
+#line 178 "ModelTemplate.cshtml"
          Write(property.ModelType.ValidateType(Model, $"this.{property.Name}", property.Constraints));
 
 
@@ -1226,7 +997,7 @@ WriteLiteral("            ");
 WriteLiteral("\n");
 
 
-#line 219 "ModelTemplate.cshtml"
+#line 180 "ModelTemplate.cshtml"
             }
             if (!anythingToValidate)
             {
@@ -1239,7 +1010,7 @@ WriteLiteral("            ");
 WriteLiteral("//Nothing to validate\n");
 
 
-#line 223 "ModelTemplate.cshtml"
+#line 184 "ModelTemplate.cshtml"
             }
 
 
@@ -1250,7 +1021,7 @@ WriteLiteral("        ");
 WriteLiteral("}\n");
 
 
-#line 225 "ModelTemplate.cshtml"
+#line 186 "ModelTemplate.cshtml"
 }
 
 
@@ -1259,13 +1030,13 @@ WriteLiteral("}\n");
 WriteLiteral("\n");
 
 
-#line 227 "ModelTemplate.cshtml"
+#line 188 "ModelTemplate.cshtml"
     
 
 #line default
 #line hidden
 
-#line 227 "ModelTemplate.cshtml"
+#line 188 "ModelTemplate.cshtml"
      if (Model.CodeModel.ShouldGenerateXmlSerialization) {
 
 #line default
@@ -1277,7 +1048,7 @@ WriteLiteral("\r\n        /// <summary>\r\n        /// Serializes the object to 
 WriteLiteral("\r\n");
 
 
-#line 233 "ModelTemplate.cshtml"
+#line 194 "ModelTemplate.cshtml"
         foreach(var property in Model.Properties.Where(p => !p.IsConstant && !p.WasFlattened())) {
 
 #line default
@@ -1285,13 +1056,13 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n");
 
 
-#line 234 "ModelTemplate.cshtml"
+#line 195 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 234 "ModelTemplate.cshtml"
+#line 195 "ModelTemplate.cshtml"
          if (property.IsNullable()) {
 
 #line default
@@ -1299,7 +1070,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n            if( null != ");
 
 
-#line 235 "ModelTemplate.cshtml"
+#line 196 "ModelTemplate.cshtml"
                     Write(property.Name);
 
 
@@ -1308,7 +1079,7 @@ WriteLiteral("\r\n            if( null != ");
 WriteLiteral(" ) \r\n            {");
 
 
-#line 236 "ModelTemplate.cshtml"
+#line 197 "ModelTemplate.cshtml"
                     }
 
 
@@ -1317,7 +1088,7 @@ WriteLiteral(" ) \r\n            {");
 WriteLiteral("                ");
 
 
-#line 237 "ModelTemplate.cshtml"
+#line 198 "ModelTemplate.cshtml"
                  if (property.ModelType is CompositeType) {
 
 #line default
@@ -1325,7 +1096,7 @@ WriteLiteral("                ");
 WriteLiteral("\r\n                result.Add(");
 
 
-#line 238 "ModelTemplate.cshtml"
+#line 199 "ModelTemplate.cshtml"
                        Write(property.Name);
 
 
@@ -1334,7 +1105,7 @@ WriteLiteral("\r\n                result.Add(");
 WriteLiteral(".XmlSerialize(new System.Xml.Linq.XElement( \"");
 
 
-#line 238 "ModelTemplate.cshtml"
+#line 199 "ModelTemplate.cshtml"
                                                                                     Write(property.XmlName);
 
 
@@ -1345,7 +1116,7 @@ WriteLiteral("\" )));");
 WriteLiteral("\n");
 
 
-#line 239 "ModelTemplate.cshtml"
+#line 200 "ModelTemplate.cshtml"
                 }
                 else if (property.ModelType is DictionaryType)
                 {
@@ -1360,7 +1131,7 @@ WriteLiteral("\n");
 WriteLiteral("\r\n                var dict = new System.Xml.Linq.XElement(\"");
 
 
-#line 247 "ModelTemplate.cshtml"
+#line 208 "ModelTemplate.cshtml"
                                                     Write(property.XmlName);
 
 
@@ -1369,7 +1140,7 @@ WriteLiteral("\r\n                var dict = new System.Xml.Linq.XElement(\"");
 WriteLiteral("\");\r\n                foreach( var key in ");
 
 
-#line 248 "ModelTemplate.cshtml"
+#line 209 "ModelTemplate.cshtml"
                                 Write(property.Name);
 
 
@@ -1378,7 +1149,7 @@ WriteLiteral("\");\r\n                foreach( var key in ");
 WriteLiteral(".Keys ) {\r\n                    dict.Add(");
 
 
-#line 249 "ModelTemplate.cshtml"
+#line 210 "ModelTemplate.cshtml"
                          Write(property.Name);
 
 
@@ -1390,7 +1161,7 @@ WriteLiteral("[key].XmlSerialize(new System.Xml.Linq.XElement(key) ) );\r\n     
 WriteLiteral("\r\n");
 
 
-#line 252 "ModelTemplate.cshtml"
+#line 213 "ModelTemplate.cshtml"
                 } else {
 
 #line default
@@ -1398,7 +1169,7 @@ WriteLiteral("\r\n");
 WriteLiteral("\r\n                var dict = new System.Xml.Linq.XElement(\"");
 
 
-#line 253 "ModelTemplate.cshtml"
+#line 214 "ModelTemplate.cshtml"
                                                     Write(property.XmlName);
 
 
@@ -1407,7 +1178,7 @@ WriteLiteral("\r\n                var dict = new System.Xml.Linq.XElement(\"");
 WriteLiteral("\");\r\n                foreach( var key in ");
 
 
-#line 254 "ModelTemplate.cshtml"
+#line 215 "ModelTemplate.cshtml"
                                 Write(property.Name);
 
 
@@ -1416,7 +1187,7 @@ WriteLiteral("\");\r\n                foreach( var key in ");
 WriteLiteral(".Keys ){\r\n                    dict.Add(new System.Xml.Linq.XElement( key, ");
 
 
-#line 255 "ModelTemplate.cshtml"
+#line 216 "ModelTemplate.cshtml"
                                                             Write(property.Name);
 
 
@@ -1425,7 +1196,7 @@ WriteLiteral(".Keys ){\r\n                    dict.Add(new System.Xml.Linq.XElem
 WriteLiteral("[key] ) );\r\n                }\r\n                result.Add(dict);");
 
 
-#line 257 "ModelTemplate.cshtml"
+#line 218 "ModelTemplate.cshtml"
                                         }
                 }
                 else if (property.ModelType is SequenceType)
@@ -1441,7 +1212,7 @@ WriteLiteral("[key] ) );\r\n                }\r\n                result.Add(dict
 WriteLiteral("\r\n                var seq = new System.Xml.Linq.XElement(\"");
 
 
-#line 266 "ModelTemplate.cshtml"
+#line 227 "ModelTemplate.cshtml"
                                                    Write(property.XmlName);
 
 
@@ -1450,7 +1221,7 @@ WriteLiteral("\r\n                var seq = new System.Xml.Linq.XElement(\"");
 WriteLiteral("\");\r\n                foreach( var value in ");
 
 
-#line 267 "ModelTemplate.cshtml"
+#line 228 "ModelTemplate.cshtml"
                                   Write(property.Name);
 
 
@@ -1460,7 +1231,7 @@ WriteLiteral(" ){\r\n                    seq.Add(value.XmlSerialize( new System.
 "( \"");
 
 
-#line 268 "ModelTemplate.cshtml"
+#line 229 "ModelTemplate.cshtml"
                                                                            Write((property.ModelType as SequenceType).ElementXmlName);
 
 
@@ -1469,7 +1240,7 @@ WriteLiteral(" ){\r\n                    seq.Add(value.XmlSerialize( new System.
 WriteLiteral("\") ) );\r\n                }\r\n                result.Add(seq);");
 
 
-#line 270 "ModelTemplate.cshtml"
+#line 231 "ModelTemplate.cshtml"
                                        } 
                 else {
 
@@ -1478,7 +1249,7 @@ WriteLiteral("\") ) );\r\n                }\r\n                result.Add(seq);"
 WriteLiteral("\r\n                foreach( var value in ");
 
 
-#line 272 "ModelTemplate.cshtml"
+#line 233 "ModelTemplate.cshtml"
                                   Write(property.Name);
 
 
@@ -1488,7 +1259,7 @@ WriteLiteral(" ){\r\n                    result.Add(value.XmlSerialize( new Syst
 "ent( \"");
 
 
-#line 273 "ModelTemplate.cshtml"
+#line 234 "ModelTemplate.cshtml"
                                                                              Write(property.XmlName);
 
 
@@ -1497,7 +1268,7 @@ WriteLiteral(" ){\r\n                    result.Add(value.XmlSerialize( new Syst
 WriteLiteral("\") ) );\r\n                }");
 
 
-#line 274 "ModelTemplate.cshtml"
+#line 235 "ModelTemplate.cshtml"
                         }} else {if ((property.ModelType as SequenceType).XmlIsWrapped) {
 
 #line default
@@ -1505,7 +1276,7 @@ WriteLiteral("\") ) );\r\n                }");
 WriteLiteral("\r\n                var seq = new System.Xml.Linq.XElement(\"");
 
 
-#line 275 "ModelTemplate.cshtml"
+#line 236 "ModelTemplate.cshtml"
                                                    Write(property.XmlName);
 
 
@@ -1514,7 +1285,7 @@ WriteLiteral("\r\n                var seq = new System.Xml.Linq.XElement(\"");
 WriteLiteral("\");\r\n                foreach( var value in ");
 
 
-#line 276 "ModelTemplate.cshtml"
+#line 237 "ModelTemplate.cshtml"
                                   Write(property.Name);
 
 
@@ -1523,7 +1294,7 @@ WriteLiteral("\");\r\n                foreach( var value in ");
 WriteLiteral(" ){\r\n                    seq.Add(new System.Xml.Linq.XElement( \"");
 
 
-#line 277 "ModelTemplate.cshtml"
+#line 238 "ModelTemplate.cshtml"
                                                        Write((property.ModelType as SequenceType).ElementXmlName);
 
 
@@ -1532,7 +1303,7 @@ WriteLiteral(" ){\r\n                    seq.Add(new System.Xml.Linq.XElement( \
 WriteLiteral("\", value ) );\r\n                }\n                result.Add(seq);");
 
 
-#line 279 "ModelTemplate.cshtml"
+#line 240 "ModelTemplate.cshtml"
                                        } 
                 else {
 
@@ -1541,7 +1312,7 @@ WriteLiteral("\", value ) );\r\n                }\n                result.Add(se
 WriteLiteral("\r\n                foreach( var value in ");
 
 
-#line 281 "ModelTemplate.cshtml"
+#line 242 "ModelTemplate.cshtml"
                                   Write(property.Name);
 
 
@@ -1550,7 +1321,7 @@ WriteLiteral("\r\n                foreach( var value in ");
 WriteLiteral(" ){\r\n                    result.Add(new System.Xml.Linq.XElement( \"");
 
 
-#line 282 "ModelTemplate.cshtml"
+#line 243 "ModelTemplate.cshtml"
                                                          Write(property.XmlName);
 
 
@@ -1559,7 +1330,7 @@ WriteLiteral(" ){\r\n                    result.Add(new System.Xml.Linq.XElement
 WriteLiteral("\", value ) );\r\n                }");
 
 
-#line 283 "ModelTemplate.cshtml"
+#line 244 "ModelTemplate.cshtml"
                         }}
                 } else if (property.ModelType is EnumType && !((EnumType)property.ModelType).ModelAsString) {
                     // serialize it as a enum type.
@@ -1570,7 +1341,7 @@ WriteLiteral("\", value ) );\r\n                }");
 WriteLiteral("\n                result.Add(new System.Xml.Linq.XAttribute(\"");
 
 
-#line 287 "ModelTemplate.cshtml"
+#line 248 "ModelTemplate.cshtml"
                                                       Write(property.XmlName);
 
 
@@ -1579,7 +1350,7 @@ WriteLiteral("\n                result.Add(new System.Xml.Linq.XAttribute(\"");
 WriteLiteral("\", ");
 
 
-#line 287 "ModelTemplate.cshtml"
+#line 248 "ModelTemplate.cshtml"
                                                                            Write(property.Name);
 
 
@@ -1590,7 +1361,7 @@ WriteLiteral(".ToSerializedValue()) );");
 WriteLiteral("\n");
 
 
-#line 288 "ModelTemplate.cshtml"
+#line 249 "ModelTemplate.cshtml"
                     } else {
 
 #line default
@@ -1598,7 +1369,7 @@ WriteLiteral("\n");
 WriteLiteral("\n                result.Add(new System.Xml.Linq.XElement(\"");
 
 
-#line 289 "ModelTemplate.cshtml"
+#line 250 "ModelTemplate.cshtml"
                                                     Write(property.XmlName);
 
 
@@ -1607,7 +1378,7 @@ WriteLiteral("\n                result.Add(new System.Xml.Linq.XElement(\"");
 WriteLiteral("\", ");
 
 
-#line 289 "ModelTemplate.cshtml"
+#line 250 "ModelTemplate.cshtml"
                                                                          Write(property.Name);
 
 
@@ -1618,7 +1389,7 @@ WriteLiteral(".ToSerializedValue()) );");
 WriteLiteral("\n");
 
 
-#line 290 "ModelTemplate.cshtml"
+#line 251 "ModelTemplate.cshtml"
                     }
                 } else {
                     // serialize it as a primitive/value type.
@@ -1637,7 +1408,7 @@ WriteLiteral("\n");
 WriteLiteral("\r\n                result.Add(new System.Xml.Linq.XAttribute(\"");
 
 
-#line 302 "ModelTemplate.cshtml"
+#line 263 "ModelTemplate.cshtml"
                                                       Write(property.XmlName);
 
 
@@ -1646,7 +1417,7 @@ WriteLiteral("\r\n                result.Add(new System.Xml.Linq.XAttribute(\"")
 WriteLiteral("\", ");
 
 
-#line 302 "ModelTemplate.cshtml"
+#line 263 "ModelTemplate.cshtml"
                                                                            Write(primitiveExpression);
 
 
@@ -1657,7 +1428,7 @@ WriteLiteral(") );");
 WriteLiteral("\n");
 
 
-#line 303 "ModelTemplate.cshtml"
+#line 264 "ModelTemplate.cshtml"
                     } else {
 
 #line default
@@ -1665,7 +1436,7 @@ WriteLiteral("\n");
 WriteLiteral("\n                result.Add(new System.Xml.Linq.XElement(\"");
 
 
-#line 304 "ModelTemplate.cshtml"
+#line 265 "ModelTemplate.cshtml"
                                                     Write(property.XmlName);
 
 
@@ -1674,7 +1445,7 @@ WriteLiteral("\n                result.Add(new System.Xml.Linq.XElement(\"");
 WriteLiteral("\", ");
 
 
-#line 304 "ModelTemplate.cshtml"
+#line 265 "ModelTemplate.cshtml"
                                                                          Write(primitiveExpression);
 
 
@@ -1685,7 +1456,7 @@ WriteLiteral(") );");
 WriteLiteral("\n");
 
 
-#line 305 "ModelTemplate.cshtml"
+#line 266 "ModelTemplate.cshtml"
                     }
                 }
 
@@ -1695,7 +1466,7 @@ WriteLiteral("\n");
 WriteLiteral("        ");
 
 
-#line 307 "ModelTemplate.cshtml"
+#line 268 "ModelTemplate.cshtml"
          if (property.IsNullable()) {
 
 #line default
@@ -1703,7 +1474,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n            }\r\n        ");
 
 
-#line 309 "ModelTemplate.cshtml"
+#line 270 "ModelTemplate.cshtml"
                }
 
 
@@ -1712,7 +1483,7 @@ WriteLiteral("\r\n            }\r\n        ");
 WriteLiteral("    ");
 
 
-#line 310 "ModelTemplate.cshtml"
+#line 271 "ModelTemplate.cshtml"
            }
 
 
@@ -1724,7 +1495,7 @@ WriteLiteral("\r\n            return result;\r\n        }\r\n\r\n        /// <su
 "erializes an XML node to an instance of ");
 
 
-#line 316 "ModelTemplate.cshtml"
+#line 277 "ModelTemplate.cshtml"
                                                   Write(Model.Name);
 
 
@@ -1733,7 +1504,7 @@ WriteLiteral("\r\n            return result;\r\n        }\r\n\r\n        /// <su
 WriteLiteral("\r\n        /// </summary>\n        internal static ");
 
 
-#line 318 "ModelTemplate.cshtml"
+#line 279 "ModelTemplate.cshtml"
                    Write(Model.Name);
 
 
@@ -1744,7 +1515,7 @@ WriteLiteral(" XmlDeserialize(string payload) \n        {\n            // deseri
 "nq.XElement.Parse( payload ) );\n        }    \n\n        internal static ");
 
 
-#line 324 "ModelTemplate.cshtml"
+#line 285 "ModelTemplate.cshtml"
                    Write(Model.Name);
 
 
@@ -1754,7 +1525,7 @@ WriteLiteral(" XmlDeserialize(System.Xml.Linq.XElement payload) \n        {\n   
 "lt = new ");
 
 
-#line 326 "ModelTemplate.cshtml"
+#line 287 "ModelTemplate.cshtml"
                          Write(Model.Name);
 
 
@@ -1763,13 +1534,13 @@ WriteLiteral(" XmlDeserialize(System.Xml.Linq.XElement payload) \n        {\n   
 WriteLiteral("();\n");
 
 
-#line 327 "ModelTemplate.cshtml"
+#line 288 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 327 "ModelTemplate.cshtml"
+#line 288 "ModelTemplate.cshtml"
          if (Model.Properties.Any(p => !p.IsConstant && !p.WasFlattened() && p.XmlIsAttribute)) {
 
 #line default
@@ -1779,14 +1550,14 @@ WriteLiteral("\r\n            System.Xml.Linq.XAttribute attribute;");
 WriteLiteral("\n");
 
 
-#line 329 "ModelTemplate.cshtml"
+#line 290 "ModelTemplate.cshtml"
         }
         
 
 #line default
 #line hidden
 
-#line 332 "ModelTemplate.cshtml"
+#line 293 "ModelTemplate.cshtml"
            
 
 
@@ -1795,13 +1566,13 @@ WriteLiteral("\n");
 WriteLiteral("\n");
 
 
-#line 334 "ModelTemplate.cshtml"
+#line 295 "ModelTemplate.cshtml"
         
 
 #line default
 #line hidden
 
-#line 334 "ModelTemplate.cshtml"
+#line 295 "ModelTemplate.cshtml"
          foreach(var property in Model.Properties.Where(p => !p.IsConstant && !p.WasFlattened())) {
             if (property.XmlIsAttribute) {
 
@@ -1810,7 +1581,7 @@ WriteLiteral("\n");
 WriteLiteral("\r\n            if( null != (attribute = payload.Attribute(\"");
 
 
-#line 336 "ModelTemplate.cshtml"
+#line 297 "ModelTemplate.cshtml"
                                                    Write(property.XmlName);
 
 
@@ -1819,13 +1590,13 @@ WriteLiteral("\r\n            if( null != (attribute = payload.Attribute(\"");
 WriteLiteral("\")))\r\n            {\r\n");
 
 
-#line 338 "ModelTemplate.cshtml"
+#line 299 "ModelTemplate.cshtml"
                 
 
 #line default
 #line hidden
 
-#line 338 "ModelTemplate.cshtml"
+#line 299 "ModelTemplate.cshtml"
                  if (property.ModelType is EnumType && !((EnumType)property.ModelType).ModelAsString) {
 
 #line default
@@ -1833,7 +1604,7 @@ WriteLiteral("\")))\r\n            {\r\n");
 WriteLiteral("\r\n                \r\n                result.");
 
 
-#line 340 "ModelTemplate.cshtml"
+#line 301 "ModelTemplate.cshtml"
                    Write(property.Name);
 
 
@@ -1842,7 +1613,7 @@ WriteLiteral("\r\n                \r\n                result.");
 WriteLiteral(" =attribute.Value.Parse");
 
 
-#line 340 "ModelTemplate.cshtml"
+#line 301 "ModelTemplate.cshtml"
                                                           Write(property.ModelType.Name);
 
 
@@ -1851,7 +1622,7 @@ WriteLiteral(" =attribute.Value.Parse");
 WriteLiteral("();\r\n                \r\n                ");
 
 
-#line 342 "ModelTemplate.cshtml"
+#line 303 "ModelTemplate.cshtml"
                        } else {
 
 #line default
@@ -1859,7 +1630,7 @@ WriteLiteral("();\r\n                \r\n                ");
 WriteLiteral(" \r\n                result.");
 
 
-#line 343 "ModelTemplate.cshtml"
+#line 304 "ModelTemplate.cshtml"
                    Write(property.Name);
 
 
@@ -1868,7 +1639,7 @@ WriteLiteral(" \r\n                result.");
 WriteLiteral(" = (");
 
 
-#line 343 "ModelTemplate.cshtml"
+#line 304 "ModelTemplate.cshtml"
                                       Write(property.ModelTypeName);
 
 
@@ -1877,7 +1648,7 @@ WriteLiteral(" = (");
 WriteLiteral(")attribute;\r\n                ");
 
 
-#line 344 "ModelTemplate.cshtml"
+#line 305 "ModelTemplate.cshtml"
                        }
 
 
@@ -1888,7 +1659,7 @@ WriteLiteral("            }\r\n            ");
 WriteLiteral("\n");
 
 
-#line 347 "ModelTemplate.cshtml"
+#line 308 "ModelTemplate.cshtml"
                 continue;
             }
             
@@ -1904,7 +1675,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n            var ");
 
 
-#line 354 "ModelTemplate.cshtml"
+#line 315 "ModelTemplate.cshtml"
             Write(deserializerName);
 
 
@@ -1916,7 +1687,7 @@ WriteLiteral(" = (XmlSerialization.GenerateDeserializer(Model.CodeModel, propert
 WriteLiteral("            ");
 
 
-#line 355 "ModelTemplate.cshtml"
+#line 316 "ModelTemplate.cshtml"
        Write(property.ModelTypeName);
 
 
@@ -1925,7 +1696,7 @@ WriteLiteral("            ");
 WriteLiteral(" ");
 
 
-#line 355 "ModelTemplate.cshtml"
+#line 316 "ModelTemplate.cshtml"
                                 Write(resultName);
 
 
@@ -1934,7 +1705,7 @@ WriteLiteral(" ");
 WriteLiteral(";\r\n            if (");
 
 
-#line 356 "ModelTemplate.cshtml"
+#line 317 "ModelTemplate.cshtml"
             Write(deserializerName);
 
 
@@ -1943,7 +1714,7 @@ WriteLiteral(";\r\n            if (");
 WriteLiteral("(payload, \"");
 
 
-#line 356 "ModelTemplate.cshtml"
+#line 317 "ModelTemplate.cshtml"
                                          Write(property.XmlName);
 
 
@@ -1952,7 +1723,7 @@ WriteLiteral("(payload, \"");
 WriteLiteral("\", out ");
 
 
-#line 356 "ModelTemplate.cshtml"
+#line 317 "ModelTemplate.cshtml"
                                                                   Write(resultName);
 
 
@@ -1961,7 +1732,7 @@ WriteLiteral("\", out ");
 WriteLiteral("))\r\n            {\r\n                result.");
 
 
-#line 358 "ModelTemplate.cshtml"
+#line 319 "ModelTemplate.cshtml"
                    Write(property.Name);
 
 
@@ -1970,7 +1741,7 @@ WriteLiteral("))\r\n            {\r\n                result.");
 WriteLiteral(" = ");
 
 
-#line 358 "ModelTemplate.cshtml"
+#line 319 "ModelTemplate.cshtml"
                                       Write(resultName);
 
 
@@ -1981,7 +1752,7 @@ WriteLiteral(";\r\n            }");
 WriteLiteral("\n");
 
 
-#line 360 "ModelTemplate.cshtml"
+#line 321 "ModelTemplate.cshtml"
         }
 
 
@@ -1990,7 +1761,7 @@ WriteLiteral("\n");
 WriteLiteral("            return result;\n        } \n    ");
 
 
-#line 363 "ModelTemplate.cshtml"
+#line 324 "ModelTemplate.cshtml"
            }
 
 

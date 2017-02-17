@@ -7,19 +7,30 @@
 @EmptyLine
 namespace @Settings.Namespace
 {
-@foreach (var usingString in Model.Usings) {
-    @:using @usingString;
-}
 @EmptyLine
-    /// <summary>
-    /// Extension methods for @(Model.ExtensionTypeName).
-    /// </summary>
-    public static partial class @(Model.ExtensionTypeName)Extensions
+
+    using System;
+    using System.Runtime.Serialization;
+    public static partial class EnumExtensions
     {
-        @foreach (MethodCs method in Model.Methods)
+        public static string GetEnumMember<T>(this T enumerationValue) where T : struct, IConvertible
         {
-            @:@(Include(new ExtensionMethodTemplate(), method))
-            @EmptyLine 
+            var type = enumerationValue.GetType();
+            if (!type.IsEnum)
+            {
+                throw new ArgumentException("EnumerationValue must be of Enum type", "enumerationValue");
+            }
+            var memberInfo = type.GetMember(enumerationValue.ToString());
+            if (memberInfo != null && memberInfo.Length > 0)
+            {
+                var attrs = memberInfo[0].GetCustomAttributes(typeof(EnumMemberAttribute), false);
+
+                if (attrs != null && attrs.Length > 0)
+                {
+                    return ((EnumMemberAttribute)attrs[0]).Value;
+                }
+            }
+            return enumerationValue.ToString();
         }
     }
 }
