@@ -63,7 +63,7 @@ namespace AutoRest.CSharp
             }
 
 			//TODO: Move this down to the modeler
-			var apis = codeModel.SecurityDefinitions?.ToList();
+            var apis = codeModel.SecurityDefinitions?.ToList() ?? new System.Collections.Generic.List<SecurityDefinition>();
 			//Taking care of OAuthApiKey apis
 			if (apis?.Count(x => x.SecuritySchemeType == SecuritySchemeType.ApiKey || x.SecuritySchemeType == SecuritySchemeType.OAuth2) == 2)
 			{
@@ -77,15 +77,16 @@ namespace AutoRest.CSharp
 			}
 			if (!apis.Any())
 			{
-				apis.Add(new SecurityDefinition());
+                apis.Add(new SecurityDefinition { ApiKey = "" });
 			}
 
 			
-			var groups = codeModel.Operations.SelectMany(method => method.SecurityDefinitionNames.Select(x => new Tuple<string, MethodGroup>(x, method))).GroupBy(x => x.Item1).ToDictionary(x => x.Key, x => x.Select(y=> y.Item2).ToArray());
+            var groups = codeModel.Operations.SelectMany(method => method.SecurityDefinitionNames.Any() ?
+                                                         method.SecurityDefinitionNames.Select(x => new Tuple<string, MethodGroup>(x, method)) : new[] { new Tuple<string, MethodGroup>("", method) }).GroupBy(x => x.Item1).ToDictionary(x => x.Key, x => x.Select(y=> y.Item2).ToArray());
 
-			var apiModels = apis.Select(x => new ApiModel { CodeModel = codeModel,
+            var apiModels = apis.Select(x => new ApiModel { CodeModel = codeModel,
 				Definition = x, 
-				Operations = groups[x.ApiKey].Union(string.IsNullOrWhiteSpace(x.ApiKeyName) ? new MethodGroup[0] : groups[x.ApiKeyName]).ToArray() 
+                Operations = groups[x.ApiKey].Union(string.IsNullOrWhiteSpace(x.ApiKeyName) ? new MethodGroup[0] : groups[x.ApiKeyName]).ToArray() 
 			}).ToList();
 
 			foreach (var apiModel in apiModels)

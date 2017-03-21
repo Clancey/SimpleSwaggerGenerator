@@ -107,7 +107,7 @@ Licensed under the MIT License. See License.txt in the project root for license 
 		/// <summary>
 		/// Gets or sets the path to the input specification file.
 		/// </summary>
-		[SettingsInfo("The location of the input specification.", true)]
+        [SettingsInfo("The location of the input specification.")]
 		[SettingsAlias("i")]
 		[SettingsAlias("input")]
 		public string SwaggerFilePath { get; set; }

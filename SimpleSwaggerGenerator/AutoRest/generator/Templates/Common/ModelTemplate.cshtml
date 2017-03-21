@@ -43,9 +43,6 @@ namespace @(Settings.Namespace).@(Settings.ModelsName)
 
     public partial class @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseModelType.Name : "")
     {
-        /// <summary>
-        @WrapComment("/// ", ("Initializes a new instance of the " + Model.Name + " class.").EscapeXmlComment())
-        /// </summary>
         @if (Model.Properties.Any(p => p.ModelType is CompositeType && ((CompositeType)p.ModelType).ContainsConstantProperties))
         {
 <text>
@@ -71,9 +68,6 @@ namespace @(Settings.Namespace).@(Settings.ModelsName)
 
         @if (Model.Properties.Any(p => p.IsConstant))
         {
-        @:/// <summary>
-        @:@WrapComment("/// ", ("Static constructor for " + Model.Name + " class.").EscapeXmlComment())
-        @:/// </summary>
         @:static @(Model.Name)()
         @:{
             foreach (var property in Model.Properties.Where(p => p.IsConstant))
