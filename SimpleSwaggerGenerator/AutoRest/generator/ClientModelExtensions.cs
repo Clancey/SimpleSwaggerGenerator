@@ -456,7 +456,7 @@ namespace AutoRest.CSharp
                         sb.AppendLine("if ({0})", constraintCheck)
                             .AppendLine("{").Indent()
                           .AppendLine("throw new System.Exception(\"Validation Failed: {0}, '{1}', {2}\");",
-                                constraint, valueReference.Replace("this.", ""), constraintValue).Outdent()
+                                constraint, valueReference.Replace("this.", ""), constraintValue.EscapeStringLiteral()).Outdent()
                             .AppendLine("}");
                     }
                     else
