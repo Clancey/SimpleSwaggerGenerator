@@ -369,6 +369,25 @@ namespace AutoRest.Core.Utilities
         public static string EscapeXmlComment(this Fixable<string> comment) => EscapeXmlComment(comment.Value);
 
         /// <summary>
+        /// Escape reserved characters in C# string literals with their escaped representations
+        /// </summary>
+        /// <param name="str">The string to escape</param>
+        /// <returns>The text appropriately escaped</returns>
+        public static string EscapeStringLiteral(this string str)
+        {
+            if (str == null)
+            {
+                return null;
+            }
+
+            return new StringBuilder(str)
+                .Replace("\\", "\\\\")
+                .Replace("\"", "\\\"").ToString();
+        }
+
+        public static string EscapeStringLiteral(this Fixable<string> str) => EscapeStringLiteral(str.Value);
+
+        /// <summary>
         /// Returns true if the type is a PrimaryType with KnownPrimaryType matching typeToMatch.
         /// </summary>
         /// <param name="type"></param>
